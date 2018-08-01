@@ -89,8 +89,8 @@ class MasterTableViewController: UITableViewController {
         // Just inform the delegate that selection has changed. What it does is not my busisness.
         self.masterSelectionDelegate?.trackSelected(source: self.masterViewModel.models[indexPath.row])
         
-        if let detailViewController = masterSelectionDelegate as? DetailViewController {
-            splitViewController?.showDetailViewController(detailViewController, sender: nil)
+        if let detailViewController = masterSelectionDelegate as? DetailViewController, let detailNavController = detailViewController.navigationController {
+            splitViewController?.showDetailViewController(detailNavController, sender: nil)
         }
     }
     
