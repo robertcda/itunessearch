@@ -81,11 +81,9 @@ class DetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = #colorLiteral(red: 0.9372549057, green: 0.9372549057, blue: 0.9568627477, alpha: 1)
-
-        self.updateDetailViewState(state: .noSelection)
-        imageView?.layer.masksToBounds = true
-        imageView?.layer.cornerRadius = 100
+        self.configureMainView()
+        self.configureImageView()
+        
         // Configure Activity Indicator
         self.imageViewActivityIndicator?.hidesWhenStopped = true
     }
@@ -93,6 +91,18 @@ class DetailViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    //**********************
+    //MARK:- View Configuration
+    //**********************
+    private func configureImageView(){
+        imageView?.layer.masksToBounds = true
+        imageView?.layer.cornerRadius = 100
+    }
+    private func configureMainView(){
+        self.view.backgroundColor = #colorLiteral(red: 0.9372549057, green: 0.9372549057, blue: 0.9568627477, alpha: 1)
+        self.updateDetailViewState(state: .noSelection)
     }
     //**********************
     //MARK:- UpdateFrom ViewModel

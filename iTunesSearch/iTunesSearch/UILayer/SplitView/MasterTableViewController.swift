@@ -23,7 +23,6 @@ class MasterTableViewController: UIViewController {
     //**********************
     @IBOutlet weak var tableView: UITableView!
     
-    
     //**********************
     //MARK:- View Model
     //**********************
@@ -51,7 +50,7 @@ class MasterTableViewController: UIViewController {
         
         self.configureSearch()
         self.configureTableView()
-
+        self.configureSplitView()
         //Informing the Viewmodel to execute these instructions if the search results change.
         self.masterViewModel.searchResultsUpdatedHandler = { [weak self] in
             self?.tableView.reloadData()
@@ -82,6 +81,10 @@ class MasterTableViewController: UIViewController {
         self.tableView.backgroundColor = #colorLiteral(red: 0.9372549057, green: 0.9372549057, blue: 0.9568627477, alpha: 1)
         self.tableView.dataSource = self
         self.tableView.delegate = self
+    }
+    
+    private func configureSplitView(){
+        self.splitViewController?.preferredDisplayMode = .allVisible
     }
     
 }
