@@ -9,6 +9,21 @@
 import Foundation
 
 
+//MARK:- EndPoints
+enum Endpoint{
+    case iTunesSearch(searchParameter:String)
+    case imageFetch(urlPath:String)
+    var url: URL?{
+        switch self {
+        case .iTunesSearch(let searchParameter):
+            return URL(string: "https://itunes.apple.com/search?term=\(searchParameter.replaceSpaceWithAPlus)")
+        case .imageFetch(let urlPath):
+            return URL(string: urlPath)
+        }
+    }
+}
+
+
 /**********
  All network calls routed through this guy.
  **********/
@@ -17,19 +32,6 @@ class NetworkAPIManager {
     let defaultSession = URLSession(configuration: .default)
     
     
-    //MARK:- EndPoints
-    enum Endpoint{
-        case iTunesSearch(searchParameter:String)
-        case imageFetch(urlPath:String)
-        var url: URL?{
-            switch self {
-            case .iTunesSearch(let searchParameter):
-                return URL(string: "https://itunes.apple.com/search?term=\(searchParameter.replaceSpaceWithAPlus)")
-            case .imageFetch(let urlPath):
-                return URL(string: urlPath)
-            }
-        }
-    }
     
     //MARK:- Errors
     enum ErrorsNetworkAPIManager: Error{
@@ -40,31 +42,42 @@ class NetworkAPIManager {
     
     
     
+}
+
+extension NetworkAPIManager: APIManagerInterface{
     //**********************
     //MARK:- GetImage
     //**********************
-    typealias DataFromCompletionHandler = (Error?,Data?) -> Void
-
-    func dataFrom(endPoint:Endpoint, completion:@escaping DataFromCompletionHandler){
+    
+    func dataFrom(endPoint:Endpoint, completion:@escaping APIManagerInterface.DataFromCompletionHandler){
         DispatchQueue.global().async {
+            
+            
             if let url = endPoint.url{
                 print("url:\(url)")
                 let dataTask = self.defaultSession.dataTask(with: url) { (data, urlresponse, error) in
-                    // First establish the return value
-                    var errorToReturn = error
-                    var dataObject:Data? = data
                     
+                    /**********
+                     Note: sometimes due to many conditional checks we may miss to call completion which may lead to someone waiting infitintly, but by using Defer, we ensure that no matter what the completion is called at a relatively smaller cost.
+                     **********/
+                    var errorToReturn:Error? = nil
+                    var dataObject:Data? = nil
+                    
+                    defer{
+                        completion(errorToReturn,dataObject)
+                    }
+                    
+
+                    
+                    // First establish the return value
+                    errorToReturn = error
+                    dataObject = data
+
                     guard errorToReturn == nil else{
                         print("NetworkAPIManager:dataFrom: Error: \(String(describing: error))")
                         return
                     }
                     
-                    /**********
-                     Note: sometimes due to many conditional checks we may miss to call completion which may lead to someone waiting infitintly, but by using Defer, we ensure that no matter what the completion is called at a relatively smaller cost.
-                     **********/
-                    defer{
-                        completion(errorToReturn,dataObject)
-                    }
                 }
                 dataTask.resume()
             }
@@ -75,20 +88,29 @@ class NetworkAPIManager {
     /**********
      GetData: used to establish a download task for a particular endpoint.
      **********/
-    typealias APIResponseType = [String:Any]
-    typealias DownloadJsonCompletionHandler = (Error?,APIResponseType?) -> Void
     
-    func downloadJsonFrom(endPoint:Endpoint, completion:@escaping DownloadJsonCompletionHandler) {
+    func downloadJsonFrom(endPoint:Endpoint, completion:@escaping APIManagerInterface.DownloadJsonCompletionHandler) {
         DispatchQueue.global().async {
+            
+
+            
             if let url = endPoint.url{
                 let downloadTask = self.defaultSession.downloadTask(with: url) { (url, urlResponse, error) in
                     
+                    /**********
+                     Note this pattern: sometimes due to many conditional checks we may miss to call completion which may lead to someone waiting infitintly, but by using Defer, we ensure that no matter what the completion is called at a relatively smaller cost.
+                     **********/
                     // First establish the return value
-                    var errorToReturn = error
+                    var errorToReturn:Error? = nil
                     var dataObject:[String:Any]? = nil
                     
-                    guard errorToReturn == nil else{
+                    defer{
+                        completion(errorToReturn,dataObject)
+                    }
+                    
+                    guard error == nil else{
                         print("NetworkAPIManager:getData: Error: \(String(describing: error))")
+                        errorToReturn = error
                         return
                     }
                     
@@ -111,12 +133,6 @@ class NetworkAPIManager {
                         
                     }
                     
-                    /**********
-                     Note this pattern: sometimes due to many conditional checks we may miss to call completion which may lead to someone waiting infitintly, but by using Defer, we ensure that no matter what the completion is called at a relatively smaller cost.
-                     **********/
-                    defer{
-                        completion(errorToReturn,dataObject)
-                    }
                 }
                 downloadTask.resume()
             }

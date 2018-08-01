@@ -9,35 +9,62 @@
 import Foundation
 import UIKit
 
+protocol APIManagerInterface{
+    typealias DataFromCompletionHandler = (Error?,Data?) -> Void
+    func dataFrom(endPoint: Endpoint, completion:@escaping DataFromCompletionHandler)
+    
+    typealias APIResponseType = [String:Any]
+    typealias DownloadJsonCompletionHandler = (Error?,APIResponseType?) -> Void
+    func downloadJsonFrom(endPoint:Endpoint, completion:@escaping DownloadJsonCompletionHandler)
+}
+
 /**********
  A layer to interpret the JSON responses into the model objects.
  **********/
 class NetworkToModelInterpretor{
     
-    let apiManager = NetworkAPIManager()
+    var apiManager:APIManagerInterface
+    
+    /**
+     Introducitng the dependency Injection during initialization.
+     */
+    init(apiManager:APIManagerInterface = NetworkAPIManager()) {
+        self.apiManager = apiManager
+    }
+    
     //MARK:- Errors
     enum ErrorNetworkToModelInterpretor:Error{
-        case noDataReturnedWithNoError
+        case noDataReturnedWithNoError, unableToConvertDataToImage, jsonDoenstContainResultsArray
     }
     
     typealias GetImageCompletion = (UIImage?,Error?) -> Void
 
     func getImage(urlPath:String, completion: @escaping GetImageCompletion){
-        apiManager.dataFrom(endPoint: NetworkAPIManager.Endpoint.imageFetch(urlPath: urlPath)) { (error, data) in
+        apiManager.dataFrom(endPoint: Endpoint.imageFetch(urlPath: urlPath)) { (error, data) in
             var errorToReturn: Error? = error
             var image:UIImage? = nil
-            
-            guard errorToReturn == nil else{
-                return
-            }
-            guard let dataObject = data else{
-                return
-            }
-            image = UIImage(data: dataObject)
             
             defer{
                 completion(image,errorToReturn)
             }
+
+            guard error == nil else{
+                errorToReturn = error
+                return
+            }
+            guard let dataObject = data else{
+                errorToReturn = ErrorNetworkToModelInterpretor.noDataReturnedWithNoError
+                return
+            }
+            
+            guard let img = UIImage(data: dataObject) else{
+                errorToReturn = ErrorNetworkToModelInterpretor.unableToConvertDataToImage
+                return
+            }
+            
+            // If i reached here then all should be good.
+            image = img
+            
         }
     }
     
@@ -51,6 +78,10 @@ class NetworkToModelInterpretor{
         apiManager.downloadJsonFrom(endPoint: .iTunesSearch(searchParameter: searchText)) { (error, dataObject) in
             var errorToReturn: Error? = nil
             var tracks:[Track] = []
+            
+            defer{
+                completion(tracks,errorToReturn)
+            }
 
             guard error == nil else{
                 errorToReturn = error
@@ -60,13 +91,14 @@ class NetworkToModelInterpretor{
                 errorToReturn = ErrorNetworkToModelInterpretor.noDataReturnedWithNoError
                 return
             }
-            if let results = dataObject["results"] as? [Track.TrackDictionary]{
-                for dict in results{
-                    tracks.append(Track(dictionary: dict))
-                }
+            guard let resultsDictArray = dataObject["results"] as? [Track.TrackDictionary] else{
+                errorToReturn = ErrorNetworkToModelInterpretor.jsonDoenstContainResultsArray
+                return
             }
-            defer{
-                completion(tracks,errorToReturn)
+            
+            // If i reach here, all should be good
+            for dict in resultsDictArray{
+                tracks.append(Track(dictionary: dict))
             }
         }
     }
