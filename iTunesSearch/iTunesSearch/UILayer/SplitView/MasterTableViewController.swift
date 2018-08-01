@@ -40,6 +40,7 @@ class MasterTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.title = "iTunes Music Search"
         self.configureSearch()
         
         //Informing the Viewmodel to execute these instructions if the search results change.
@@ -61,6 +62,7 @@ class MasterTableViewController: UITableViewController {
         searchController.hidesNavigationBarDuringPresentation = false
         searchController.dimsBackgroundDuringPresentation = false
         searchController.searchBar.sizeToFit()
+        searchController.searchBar.placeholder = "Type to search music"
         self.tableView.tableHeaderView = searchController.searchBar
     }
 

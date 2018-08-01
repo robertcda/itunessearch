@@ -63,7 +63,6 @@ class NetworkToModelInterpretorTests: XCTestCase {
         let mockJSONResponse:[String:Any] = ["resultCount":10,
                                              "results":tracksArray]
         
-        let someUnconvertableData = Data()
         self.objectUnderTest = NetworkToModelInterpretor(apiManager: MockAPIInterface(error: nil, jsonResponseObject: mockJSONResponse ))
         
         let getTrackExpection = expectation(description: "getting Tracks")
