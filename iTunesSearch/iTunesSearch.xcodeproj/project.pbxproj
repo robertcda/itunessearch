@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E105658E2112236000984050 /* iTunesSearchSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E105658D2112236000984050 /* iTunesSearchSplitViewController.swift */; };
 		E1453EFA211172E5005E4D5A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1453EF9211172E5005E4D5A /* AppDelegate.swift */; };
 		E1453F01211172E5005E4D5A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E1453EFF211172E5005E4D5A /* Main.storyboard */; };
 		E1453F03211172E6005E4D5A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E1453F02211172E6005E4D5A /* Assets.xcassets */; };
@@ -45,6 +46,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		E105658D2112236000984050 /* iTunesSearchSplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iTunesSearchSplitViewController.swift; sourceTree = "<group>"; };
 		E1453EF6211172E5005E4D5A /* iTunesSearch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iTunesSearch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1453EF9211172E5005E4D5A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E1453F00211172E5005E4D5A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -193,6 +195,7 @@
 			children = (
 				E1453F2E21117805005E4D5A /* TableViewCells */,
 				E1453F2921117662005E4D5A /* SplitView */,
+				E105658D2112236000984050 /* iTunesSearchSplitViewController.swift */,
 			);
 			path = UILayer;
 			sourceTree = "<group>";
@@ -363,6 +366,7 @@
 				E1453F2D211176CA005E4D5A /* MasterTableViewController.swift in Sources */,
 				E1453F3F21119746005E4D5A /* ViewModel.swift in Sources */,
 				E1453F3D211186AE005E4D5A /* Track.swift in Sources */,
+				E105658E2112236000984050 /* iTunesSearchSplitViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

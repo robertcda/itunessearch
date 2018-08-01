@@ -193,10 +193,10 @@
             </objects>
             <point key="canvasLocation" x="-238" y="-509"/>
         </scene>
-        <!--Split View Controller-->
+        <!--iTunes Search Split View Controller-->
         <scene sceneID="gKG-bF-l1C">
             <objects>
-                <splitViewController id="TPS-3a-hnQ" sceneMemberID="viewController">
+                <splitViewController id="TPS-3a-hnQ" customClass="iTunesSearchSplitViewController" customModule="iTunesSearch" customModuleProvider="target" sceneMemberID="viewController">
                     <connections>
                         <segue destination="GPu-ln-EhO" kind="relationship" relationship="masterViewController" id="CPf-X6-Fhv"/>
                         <segue destination="hUc-qG-YVc" kind="relationship" relationship="detailViewController" id="8aJ-VM-6qY"/>

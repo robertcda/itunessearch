@@ -28,7 +28,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         }
         
         masterViewController.masterSelectionDelegate = detailViewController
-        
+        _ = detailViewController.view
+        _ = masterViewController.view
 //        let firstMonster = masterViewController.monsters.first
 //        detailViewController.monster = firstMonster
         
