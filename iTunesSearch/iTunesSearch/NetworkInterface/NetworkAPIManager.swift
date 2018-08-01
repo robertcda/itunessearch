@@ -46,26 +46,28 @@ class NetworkAPIManager {
     typealias DataFromCompletionHandler = (Error?,Data?) -> Void
 
     func dataFrom(endPoint:Endpoint, completion:@escaping DataFromCompletionHandler){
-        if let url = endPoint.url{
-            print("url:\(url)")
-            let dataTask = defaultSession.dataTask(with: url) { (data, urlresponse, error) in
-                // First establish the return value
-                var errorToReturn = error
-                var dataObject:Data? = data
-                
-                guard errorToReturn == nil else{
-                    print("NetworkAPIManager:dataFrom: Error: \(String(describing: error))")
-                    return
+        DispatchQueue.global().async {
+            if let url = endPoint.url{
+                print("url:\(url)")
+                let dataTask = self.defaultSession.dataTask(with: url) { (data, urlresponse, error) in
+                    // First establish the return value
+                    var errorToReturn = error
+                    var dataObject:Data? = data
+                    
+                    guard errorToReturn == nil else{
+                        print("NetworkAPIManager:dataFrom: Error: \(String(describing: error))")
+                        return
+                    }
+                    
+                    /**********
+                     Note: sometimes due to many conditional checks we may miss to call completion which may lead to someone waiting infitintly, but by using Defer, we ensure that no matter what the completion is called at a relatively smaller cost.
+                     **********/
+                    defer{
+                        completion(errorToReturn,dataObject)
+                    }
                 }
-                
-                /**********
-                 Note: sometimes due to many conditional checks we may miss to call completion which may lead to someone waiting infitintly, but by using Defer, we ensure that no matter what the completion is called at a relatively smaller cost.
-                 **********/
-                defer{
-                    completion(errorToReturn,dataObject)
-                }
+                dataTask.resume()
             }
-            dataTask.resume()
         }
     }
     
@@ -77,47 +79,48 @@ class NetworkAPIManager {
     typealias DownloadJsonCompletionHandler = (Error?,APIResponseType?) -> Void
     
     func downloadJsonFrom(endPoint:Endpoint, completion:@escaping DownloadJsonCompletionHandler) {
-        if let url = endPoint.url{
-            print("url:\(url)")
-            let downloadTask = defaultSession.downloadTask(with: url) { (url, urlResponse, error) in
-                
-                // First establish the return value
-                var errorToReturn = error
-                var dataObject:[String:Any]? = nil
-                
-                guard errorToReturn == nil else{
-                    print("NetworkAPIManager:getData: Error: \(String(describing: error))")
-                    return
-                }
-                
-                if let url = url{
-                    if let data = try? Data(contentsOf: url){
-                        do{
-                            let jsonObject = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
-                            if let jsonObjectDictionary = jsonObject as? [String:Any]{
-                                dataObject = jsonObjectDictionary
-                            }
-                            
-                        }catch let e{
-                            print("NetworkAPIManager:getData: during JSON Serialization error: \(e)")
-                            errorToReturn = ErrorsNetworkAPIManager.jsonSerializationFailed
-                        }
-                    }else{
-                        print("NetworkAPIManager:getData: unableToReadContentsOfURL")
-                        errorToReturn = ErrorsNetworkAPIManager.unableToReadContentsOfURL
+        DispatchQueue.global().async {
+            if let url = endPoint.url{
+                print("url:\(url)")
+                let downloadTask = self.defaultSession.downloadTask(with: url) { (url, urlResponse, error) in
+                    
+                    // First establish the return value
+                    var errorToReturn = error
+                    var dataObject:[String:Any]? = nil
+                    
+                    guard errorToReturn == nil else{
+                        print("NetworkAPIManager:getData: Error: \(String(describing: error))")
+                        return
                     }
                     
+                    if let url = url{
+                        if let data = try? Data(contentsOf: url){
+                            do{
+                                let jsonObject = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
+                                if let jsonObjectDictionary = jsonObject as? [String:Any]{
+                                    dataObject = jsonObjectDictionary
+                                }
+                                
+                            }catch let e{
+                                print("NetworkAPIManager:getData: during JSON Serialization error: \(e)")
+                                errorToReturn = ErrorsNetworkAPIManager.jsonSerializationFailed
+                            }
+                        }else{
+                            print("NetworkAPIManager:getData: unableToReadContentsOfURL")
+                            errorToReturn = ErrorsNetworkAPIManager.unableToReadContentsOfURL
+                        }
+                        
+                    }
+                    
+                    /**********
+                     Note this pattern: sometimes due to many conditional checks we may miss to call completion which may lead to someone waiting infitintly, but by using Defer, we ensure that no matter what the completion is called at a relatively smaller cost.
+                     **********/
+                    defer{
+                        completion(errorToReturn,dataObject)
+                    }
                 }
-                
-                /**********
-                 Note this pattern: sometimes due to many conditional checks we may miss to call completion which may lead to someone waiting infitintly, but by using Defer, we ensure that no matter what the completion is called at a relatively smaller cost.
-                 **********/
-                defer{
-                    completion(errorToReturn,dataObject)
-                }
+                downloadTask.resume()
             }
-            downloadTask.resume()
         }
-        
     }
 }

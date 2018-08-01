@@ -23,6 +23,7 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var releaseDateLabel: UILabel!
     
     var source: TrackViewModel? = nil
+    
     var imageViewState:DetailViewImageState = .fetching{
         didSet{
             DispatchQueue.main.async {

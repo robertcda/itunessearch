@@ -14,7 +14,7 @@ import UIKit
  **********/
 class NetworkToModelInterpretor{
     
-    
+    let apiManager = NetworkAPIManager()
     //MARK:- Errors
     enum ErrorNetworkToModelInterpretor:Error{
         case noDataReturnedWithNoError
@@ -23,7 +23,7 @@ class NetworkToModelInterpretor{
     typealias GetImageCompletion = (UIImage?,Error?) -> Void
 
     func getImage(urlPath:String, completion: @escaping GetImageCompletion){
-        NetworkAPIManager().dataFrom(endPoint: NetworkAPIManager.Endpoint.imageFetch(urlPath: urlPath)) { (error, data) in
+        apiManager.dataFrom(endPoint: NetworkAPIManager.Endpoint.imageFetch(urlPath: urlPath)) { (error, data) in
             var errorToReturn: Error? = error
             var image:UIImage? = nil
             
@@ -49,7 +49,7 @@ class NetworkToModelInterpretor{
 
     func getTracks(searchText: String, completion:@escaping GetTracksCompletion){
         
-        NetworkAPIManager().downloadJsonFrom(endPoint: .iTunesSearch(searchParameter: searchText)) { (error, dataObject) in
+        apiManager.downloadJsonFrom(endPoint: .iTunesSearch(searchParameter: searchText)) { (error, dataObject) in
             var errorToReturn: Error? = nil
             var tracks:[Track] = []
 
@@ -69,8 +69,6 @@ class NetworkToModelInterpretor{
             defer{
                 completion(tracks,errorToReturn)
             }
-
         }
-
     }
 }

@@ -13,9 +13,8 @@ protocol MasterSelectionDelegate {
 }
 
 class MasterTableViewController: UITableViewController {
-
     
-    var models:[TrackViewModel] = []
+    var masterViewModel = MasterViewModel()
     
     let searchController = UISearchController(searchResultsController: nil)
     var searchTextRequest: String = ""
@@ -31,6 +30,9 @@ class MasterTableViewController: UITableViewController {
         searchController.searchBar.sizeToFit()
         self.tableView.tableHeaderView = searchController.searchBar
 
+        self.masterViewModel.searchResultsUpdatedHandler = {
+            self.tableView.reloadData()
+        }
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -47,13 +49,13 @@ class MasterTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return self.models.count
+        return self.masterViewModel.models.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cellIdentifier", for: indexPath) as! MasterTableViewCell
         
-        let model = self.models[indexPath.row]
+        let model = self.masterViewModel.models[indexPath.row]
         // Configure the cell...
         cell.updateFrom(source: model)
         
@@ -62,12 +64,12 @@ class MasterTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.masterSelectionDelegate?.trackSelected(source: self.models[indexPath.row])
+        self.masterSelectionDelegate?.trackSelected(source: self.masterViewModel.models[indexPath.row])
     }
     
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         // Delay the fecth of the images only until the cell is going to be displayed.
-        let model = self.models[indexPath.row]
+        let model = self.masterViewModel.models[indexPath.row]
         model.showThumbnailImage { [weak cell] (image) in
             (cell as? MasterTableViewCell)?.imageViewState = .fetched(image)
         }
@@ -121,27 +123,9 @@ class MasterTableViewController: UITableViewController {
 extension MasterTableViewController:UISearchResultsUpdating{
     func updateSearchResults(for searchController: UISearchController) {
         if let searchText = searchController.searchBar.text{
-            
-            self.searchTextRequest = searchText
-            NetworkToModelInterpretor().getTracks(searchText: searchText) { (tracks, error) in
-                
-                guard self.searchTextRequest == searchText else{
-                    print("OLDER REQUEST: searchText:\(searchText)")
-                    return
-                }
-                
-                print("ResponseFor:searchText:\(searchText), Tracks:\(tracks.count)")
-                
-                self.models.removeAll()
-                self.models.append(contentsOf: tracks.map({ TrackViewModel(track: $0)}))
-                
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
-                }
-            }
+            self.masterViewModel.searchFor(searchText: searchText)
         }
     }
-    
 }
 
 
