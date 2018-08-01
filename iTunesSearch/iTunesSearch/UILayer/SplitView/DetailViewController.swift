@@ -14,6 +14,10 @@ class DetailViewController: UIViewController {
         case fetching, error, fetched(UIImage)
     }
     
+    //**********************
+    //MARK:- IBOutlet
+    //**********************
+
     @IBOutlet weak var imageViewActivityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var trackNameLabel: UILabel!
@@ -22,8 +26,17 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var priceLabel: UILabel!
     @IBOutlet weak var releaseDateLabel: UILabel!
     
-    var source: TrackViewModel? = nil
+    //**********************
+    //MARK:- View Model
+    //**********************
+
+    var viewModel: TrackViewModel? = nil
     
+    
+    //**********************
+    //MARK:- ImageView states.
+    //**********************
+
     var imageViewState:DetailViewImageState = .fetching{
         didSet{
             DispatchQueue.main.async {
@@ -44,6 +57,10 @@ class DetailViewController: UIViewController {
         }
     }
 
+    //**********************
+    //MARK:- View life cycle methods
+    //**********************
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -55,22 +72,17 @@ class DetailViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
 
+//**********************
+//MARK:- On Change of Album.
+//**********************
+
 extension DetailViewController: MasterSelectionDelegate{
     func trackSelected(source: TrackViewModel) {
+        self.viewModel = source
+        
         self.trackNameLabel.text = source.track.trackName
         self.albumLabel.text = source.track.albumName
         self.artistLabel.text = source.track.artistName
@@ -78,11 +90,8 @@ extension DetailViewController: MasterSelectionDelegate{
         self.releaseDateLabel.text = "\(source.track.releaseDate)"
         
         self.imageViewState = .fetching
-        source.fetchArtwork { (image) in
-            self.imageViewState = .fetched(image)
+        source.fetchArtwork { [weak self] (image) in
+            self?.imageViewState = .fetched(image)
         }
-        
     }
-    
-    
 }

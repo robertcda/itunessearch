@@ -9,9 +9,9 @@
 import Foundation
 import UIKit
 
-class TrackViewModel{
+struct TrackViewModel{
     var track: Track
-    let modelInterpretor = NetworkToModelInterpretor()
+    private let modelInterpretor = NetworkToModelInterpretor()
     
     typealias ImageHandler = (UIImage)->Void
     
@@ -58,6 +58,8 @@ class TrackViewModel{
             }
         }
     }
+    
+    
 }
 
 extension TrackViewModel:MasterTableViewCellDataSource{
