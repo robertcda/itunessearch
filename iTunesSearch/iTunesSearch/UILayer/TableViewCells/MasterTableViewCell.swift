@@ -43,14 +43,16 @@ class MasterTableViewCell: UITableViewCell {
                 case .fetching:
                     self.leftImageView.image = #imageLiteral(resourceName: "placeholder")
                     self.imageLoadingActivity.startAnimating()
-                    self.imageView?.alpha = 0.3
+                    self.leftImageView?.alpha = 0.2
                 case .error:
-                    self.leftImageView.image = #imageLiteral(resourceName: "placeholder")
+                    self.leftImageView.image = #imageLiteral(resourceName: "no-image")
                     self.imageLoadingActivity.stopAnimating()
+                    self.leftImageView?.alpha = 0.2
+
                 case .fetched(let image):
-                    self.imageView?.image = image
+                    self.leftImageView?.image = image
                     self.imageLoadingActivity.stopAnimating()
-                    self.imageView?.alpha = 1
+                    self.leftImageView?.alpha = 1
                 }
             }
         }

@@ -109,7 +109,11 @@ class DetailViewController: UIViewController {
         
         self.imageViewState = .fetching
         viewModel.fetchArtwork { [weak self] (image) in
-            self?.imageViewState = .fetched(image)
+            if let image = image{
+                self?.imageViewState = .fetched(image)
+            }else{
+                self?.imageViewState = .error
+            }
         }
     }
 }

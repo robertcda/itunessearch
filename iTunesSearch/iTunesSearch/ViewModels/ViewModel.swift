@@ -13,7 +13,7 @@ struct TrackViewModel{
     var track: Track
     private let modelInterpretor = NetworkToModelInterpretor()
     
-    typealias ImageHandler = (UIImage)->Void
+    typealias ImageHandler = (UIImage?)->Void
     
     init(track: Track) {
         self.track = track
@@ -28,6 +28,10 @@ struct TrackViewModel{
         
         if let thumbnailPath = self.track.artworkUrl30{
             modelInterpretor.getImage(urlPath: thumbnailPath) { (image, error) in
+                var imageToReturn: UIImage? = nil
+                defer{
+                    thumbnailImageHandler(imageToReturn)
+                }
                 guard error == nil else{
                     print("TrackViewModel: Unable to fetch image: \(String(describing: error))")
                     return
@@ -36,8 +40,7 @@ struct TrackViewModel{
                     print("TrackViewModel: No Image returned.")
                     return
                 }
-                
-                thumbnailImageHandler(image)
+                imageToReturn = image
             }
         }
     }
@@ -45,6 +48,11 @@ struct TrackViewModel{
     func fetchArtwork(thumbnailImageHandler:@escaping ImageHandler){
         if let thumbnailPath = self.track.artworkUrl100{
             modelInterpretor.getImage(urlPath: thumbnailPath) { (image, error) in
+                var imageToReturn: UIImage? = nil
+                defer{
+                    thumbnailImageHandler(imageToReturn)
+                }
+
                 guard error == nil else{
                     print("TrackViewModel:fetchArtwork: Unable to fetch image: \(String(describing: error))")
                     return
@@ -53,8 +61,7 @@ struct TrackViewModel{
                     print("TrackViewModel:fetchArtwork: No Image returned.")
                     return
                 }
-                
-                thumbnailImageHandler(image)
+                imageToReturn = image
             }
         }
     }

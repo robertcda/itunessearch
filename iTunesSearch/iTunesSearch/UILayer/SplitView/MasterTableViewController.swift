@@ -100,7 +100,14 @@ class MasterTableViewController: UITableViewController {
         // Delay the fecth of the images only until the cell is going to be displayed.
         let model = self.masterViewModel.models[indexPath.row]
         model.showThumbnailImage { [weak cell] (image) in
-            (cell as? MasterTableViewCell)?.imageViewState = .fetched(image)
+            guard let cell = cell as? MasterTableViewCell else{
+                return
+            }
+            if let image = image{
+                cell.imageViewState = .fetched(image)
+            }else{
+                cell.imageViewState = .error
+            }
         }
     }
 }
