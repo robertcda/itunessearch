@@ -141,12 +141,22 @@
                                 <rect key="frame" x="100" y="163.5" width="20" height="20"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </activityIndicatorView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nothing to show. Search and select a track.." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cLu-v7-lTj">
+                                <rect key="frame" x="0.0" y="390" width="414" height="20.333333333333314"/>
+                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="17"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="jcQ-N2-Sez" firstAttribute="top" secondItem="9d2-vF-Hpx" secondAttribute="top" constant="10" id="DhF-h1-LyO"/>
                             <constraint firstItem="jcQ-N2-Sez" firstAttribute="leading" secondItem="9d2-vF-Hpx" secondAttribute="leading" constant="10" id="F29-Qi-HsY"/>
+                            <constraint firstItem="cLu-v7-lTj" firstAttribute="centerX" secondItem="9d2-vF-Hpx" secondAttribute="centerX" id="RJI-SZ-3Hd"/>
+                            <constraint firstItem="cLu-v7-lTj" firstAttribute="centerY" secondItem="9d2-vF-Hpx" secondAttribute="centerY" id="V2O-Tq-MkU"/>
+                            <constraint firstItem="9d2-vF-Hpx" firstAttribute="trailing" secondItem="cLu-v7-lTj" secondAttribute="trailing" id="WBC-0Z-Rl2"/>
                             <constraint firstItem="9d2-vF-Hpx" firstAttribute="trailing" secondItem="jcQ-N2-Sez" secondAttribute="trailing" constant="10" id="hCL-gu-30l"/>
+                            <constraint firstItem="cLu-v7-lTj" firstAttribute="leading" secondItem="9d2-vF-Hpx" secondAttribute="leading" id="mSx-p3-ceM"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="9d2-vF-Hpx"/>
                     </view>
@@ -155,6 +165,9 @@
                         <outlet property="albumLabel" destination="Wp7-Pe-jm5" id="KKI-Ab-ZsW"/>
                         <outlet property="artistLabel" destination="vvB-Cz-gLa" id="CMO-Ib-MHs"/>
                         <outlet property="imageView" destination="D6i-eq-bL2" id="NoT-Nz-a4x"/>
+                        <outlet property="imageViewActivityIndicator" destination="d3p-od-LuP" id="7wW-hn-Fjx"/>
+                        <outlet property="mainStackView" destination="jcQ-N2-Sez" id="v0z-Ce-Oki"/>
+                        <outlet property="nothingSelectedLabel" destination="cLu-v7-lTj" id="oRt-mR-tXc"/>
                         <outlet property="priceLabel" destination="zug-N2-a4q" id="fIH-bi-z0k"/>
                         <outlet property="releaseDateLabel" destination="PUY-j4-ffj" id="c7n-3g-gdk"/>
                         <outlet property="trackNameLabel" destination="2nh-VK-vyZ" id="28Z-2g-Erb"/>

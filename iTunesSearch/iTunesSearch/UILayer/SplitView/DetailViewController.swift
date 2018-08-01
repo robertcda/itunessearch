@@ -25,6 +25,8 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var priceLabel: UILabel!
     @IBOutlet weak var releaseDateLabel: UILabel!
     
+    @IBOutlet weak var nothingSelectedLabel: UILabel!
+    @IBOutlet weak var mainStackView: UIStackView!
     //**********************
     //MARK:- View Model
     //**********************
@@ -52,6 +54,25 @@ class DetailViewController: UIViewController {
             }
         }
     }
+    
+    //**********************
+    //MARK:- Controller Selection States
+    //**********************
+    enum DetailViewState{
+        case selected, noSelection
+    }
+    var detailViewState: DetailViewState = .noSelection
+    
+    func updateDetailViewState(state:DetailViewState){
+        switch state {
+        case .noSelection:
+            mainStackView.isHidden = true
+            nothingSelectedLabel.isHidden = false
+        case .selected:
+            mainStackView.isHidden = false
+            nothingSelectedLabel.isHidden = true
+        }
+    }
 
     //**********************
     //MARK:- View life cycle methods
@@ -60,6 +81,7 @@ class DetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.updateDetailViewState(state: .noSelection)
         imageView?.layer.masksToBounds = true
         imageView?.layer.cornerRadius = 100
         // Configure Activity Indicator
@@ -79,6 +101,10 @@ class DetailViewController: UIViewController {
 
 extension DetailViewController: MasterSelectionDelegate{
     func trackSelected(source: TrackViewModel) {
+        self.updateDetailViewState(state: .selected)
+        //Show the main stack view.
+        mainStackView.isHidden = false
+        
         self.viewModel = source
         
         self.trackNameLabel.text = source.track.trackName
