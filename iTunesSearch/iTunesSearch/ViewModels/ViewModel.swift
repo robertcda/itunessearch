@@ -36,3 +36,8 @@ extension TrackViewModel:MasterTableViewCellDataSource{
         return "Artist:"
     }
 }
+
+
+extension TrackViewModel:DetailViewDataSource{
+    
+}

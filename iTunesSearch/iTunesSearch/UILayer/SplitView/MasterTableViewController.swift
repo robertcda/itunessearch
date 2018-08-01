@@ -9,7 +9,7 @@
 import UIKit
 
 protocol MasterSelectionDelegate {
-    func trackSelected(track:Track)
+    func trackSelected(source:TrackViewModel)
 }
 
 class MasterTableViewController: UITableViewController {
@@ -61,7 +61,7 @@ class MasterTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.masterSelectionDelegate?.trackSelected(track: self.models[indexPath.row].track)
+        self.masterSelectionDelegate?.trackSelected(source: self.models[indexPath.row])
     }
 
     /*

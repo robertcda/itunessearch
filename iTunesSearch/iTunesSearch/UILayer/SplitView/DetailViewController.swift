@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol DetailViewDataSource {
+    
+}
+
 class DetailViewController: UIViewController {
 
     @IBOutlet weak var imageView: UIImageView!
@@ -42,12 +46,12 @@ class DetailViewController: UIViewController {
 }
 
 extension DetailViewController: MasterSelectionDelegate{
-    func trackSelected(track: Track) {
-        self.trackNameLabel.text = track.trackName
-        self.albumLabel.text = "???"
-        self.artistLabel.text = track.artistName
-        self.priceLabel.text = "???"
-        self.releaseDateLabel.text = "???"
+    func trackSelected(source: TrackViewModel) {
+        self.trackNameLabel.text = source.track.trackName
+        self.albumLabel.text = source.track.albumName
+        self.artistLabel.text = source.track.artistName
+        self.priceLabel.text = "\(source.track.price)"
+        self.releaseDateLabel.text = "\(source.track.releaseDate)"
     }
     
     

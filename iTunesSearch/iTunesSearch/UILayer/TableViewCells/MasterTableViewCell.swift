@@ -23,6 +23,10 @@ class MasterTableViewCell: UITableViewCell {
         case fetching, error, fetched(UIImage)
     }
 
+    //**********************
+    //MARK:- IBOutlets
+    //**********************
+    
     @IBOutlet weak var imageLoadingActivity: UIActivityIndicatorView!
     @IBOutlet weak var leftImageView: UIImageView!
     @IBOutlet weak var firstRowLabelTitleLabel: UILabel!
@@ -56,7 +60,10 @@ class MasterTableViewCell: UITableViewCell {
         self.configureActivity()
     }
 
+    //**********************
     //MARK:- Activity Indicator
+    //**********************
+
     private func configureActivity(){
         imageLoadingActivity.hidesWhenStopped = true
     }
@@ -67,7 +74,10 @@ class MasterTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    //MARK:- Updating from Cells DataSource.
+    //**********************
+    //MARK:- Updating from Cells DataSource
+    //**********************
+
     func updateFrom(source:MasterTableViewCellDataSource){
         self.firstRowLabelTitleLabel.text = source.firstRowLabelTitleLabel
         self.firstRowValueLabel.text = source.firstRowValueLabel
