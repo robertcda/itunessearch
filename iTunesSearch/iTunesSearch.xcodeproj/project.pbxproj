@@ -15,6 +15,8 @@
 		E1453F1C211172E6005E4D5A /* iTunesSearchUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1453F1B211172E6005E4D5A /* iTunesSearchUITests.swift */; };
 		E1453F2D211176CA005E4D5A /* MasterTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1453F2C211176CA005E4D5A /* MasterTableViewController.swift */; };
 		E1453F3021117828005E4D5A /* MasterTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1453F2F21117828005E4D5A /* MasterTableViewCell.swift */; };
+		E1453F3721117E04005E4D5A /* NetworkAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1453F3621117E04005E4D5A /* NetworkAPIManager.swift */; };
+		E1453F3921118434005E4D5A /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1453F3821118434005E4D5A /* String+Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +51,8 @@
 		E1453F1D211172E6005E4D5A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E1453F2C211176CA005E4D5A /* MasterTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterTableViewController.swift; sourceTree = "<group>"; };
 		E1453F2F21117828005E4D5A /* MasterTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterTableViewCell.swift; sourceTree = "<group>"; };
+		E1453F3621117E04005E4D5A /* NetworkAPIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkAPIManager.swift; sourceTree = "<group>"; };
+		E1453F3821118434005E4D5A /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,8 +103,11 @@
 		E1453EF8211172E5005E4D5A /* iTunesSearch */ = {
 			isa = PBXGroup;
 			children = (
-				E1453F2E21117805005E4D5A /* TableViewCells */,
-				E1453F2921117662005E4D5A /* SplitView */,
+				E1453F3521117DDD005E4D5A /* Utilities */,
+				E1453F3421117DCF005E4D5A /* ViewModels */,
+				E1453F3321117DB4005E4D5A /* UILayer */,
+				E1453F3221117D9A005E4D5A /* Model */,
+				E1453F3121117D8F005E4D5A /* NetworkInterface */,
 				E1453EF9211172E5005E4D5A /* AppDelegate.swift */,
 				E1453EFF211172E5005E4D5A /* Main.storyboard */,
 				E1453F02211172E6005E4D5A /* Assets.xcassets */,
@@ -142,6 +149,45 @@
 				E1453F2F21117828005E4D5A /* MasterTableViewCell.swift */,
 			);
 			path = TableViewCells;
+			sourceTree = "<group>";
+		};
+		E1453F3121117D8F005E4D5A /* NetworkInterface */ = {
+			isa = PBXGroup;
+			children = (
+				E1453F3621117E04005E4D5A /* NetworkAPIManager.swift */,
+			);
+			path = NetworkInterface;
+			sourceTree = "<group>";
+		};
+		E1453F3221117D9A005E4D5A /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		E1453F3321117DB4005E4D5A /* UILayer */ = {
+			isa = PBXGroup;
+			children = (
+				E1453F2E21117805005E4D5A /* TableViewCells */,
+				E1453F2921117662005E4D5A /* SplitView */,
+			);
+			path = UILayer;
+			sourceTree = "<group>";
+		};
+		E1453F3421117DCF005E4D5A /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		E1453F3521117DDD005E4D5A /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				E1453F3821118434005E4D5A /* String+Extensions.swift */,
+			);
+			path = Utilities;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -275,7 +321,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E1453F3921118434005E4D5A /* String+Extensions.swift in Sources */,
 				E1453EFA211172E5005E4D5A /* AppDelegate.swift in Sources */,
+				E1453F3721117E04005E4D5A /* NetworkAPIManager.swift in Sources */,
 				E1453F3021117828005E4D5A /* MasterTableViewCell.swift in Sources */,
 				E1453F2D211176CA005E4D5A /* MasterTableViewController.swift in Sources */,
 			);
