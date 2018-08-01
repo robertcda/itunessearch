@@ -15,7 +15,13 @@ protocol MasterSelectionDelegate {
     func trackSelected(source:TrackViewModel)
 }
 
-class MasterTableViewController: UITableViewController {
+class MasterTableViewController: UIViewController {
+    
+    //**********************
+    //MARK:- IBOutlets
+    //**********************
+    @IBOutlet weak var tableView: UITableView!
+    
     
     //**********************
     //MARK:- View Model
@@ -41,6 +47,10 @@ class MasterTableViewController: UITableViewController {
         super.viewDidLoad()
 
         self.title = "iTunes Music Search"
+        
+        self.tableView.dataSource = self
+        self.tableView.delegate = self
+        
         self.configureSearch()
         
         self.tableView.backgroundColor = #colorLiteral(red: 0.9372549057, green: 0.9372549057, blue: 0.9568627477, alpha: 1)
@@ -68,16 +78,19 @@ class MasterTableViewController: UITableViewController {
         self.tableView.tableHeaderView = searchController.searchBar
     }
 
+    
+}
+extension MasterTableViewController:UITableViewDataSource{
     //**********************
     //MARK:- Table view data source
     //**********************
-
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         return self.masterViewModel.models.count
     }
-
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         // This has to be as! as this controller cannot deal with any other cell for now.
         //We can default to UITableViewCell() to avoid crash, but in this case it should crash.
@@ -88,8 +101,15 @@ class MasterTableViewController: UITableViewController {
         cell.updateFrom(source: model)
         return cell
     }
-    
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+
+}
+
+extension MasterTableViewController: UITableViewDelegate{
+    //**********************
+    //MARK:- Table view Delegate
+    //**********************
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // Just inform the delegate that selection has changed. What it does is not my busisness.
         self.masterSelectionDelegate?.trackSelected(source: self.masterViewModel.models[indexPath.row])
         
@@ -98,7 +118,7 @@ class MasterTableViewController: UITableViewController {
         }
     }
     
-    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         // Delay the fecth of the images only until the cell is going to be displayed.
         let model = self.masterViewModel.models[indexPath.row]
         model.showThumbnailImage { [weak cell] (image) in
@@ -113,7 +133,6 @@ class MasterTableViewController: UITableViewController {
         }
     }
 }
-
 //**********************
 //MARK:- UISearchResultsUpdating
 //**********************
