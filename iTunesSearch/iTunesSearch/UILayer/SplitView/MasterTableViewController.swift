@@ -22,6 +22,7 @@ class MasterTableViewController: UIViewController {
     //MARK:- IBOutlets
     //**********************
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var noSearchResultsLabel: UILabel!
     
     //**********************
     //MARK:- View Model
@@ -54,7 +55,7 @@ class MasterTableViewController: UIViewController {
         //Informing the Viewmodel to execute these instructions if the search results change.
         self.masterViewModel.searchResultsUpdatedHandler = { [weak self] in
             self?.tableView.reloadData()
-            
+            self?.showOrHideNoResults()
             // This should only scroll the tableView tothe top evertime we get new results.
             let top = IndexPath(row: NSNotFound, section: 0)
             self?.tableView.scrollToRow(at: top, at: .bottom, animated: true)
@@ -90,7 +91,16 @@ class MasterTableViewController: UIViewController {
     private func configureSplitView(){
         self.splitViewController?.preferredDisplayMode = .allVisible
     }
-    
+    //**********************
+    //MARK:- UI Behavior
+    //**********************
+    private func showOrHideNoResults(){
+        if self.masterViewModel.models.count == 0{
+            noSearchResultsLabel.isHidden = false
+        }else{
+            noSearchResultsLabel.isHidden = true
+        }
+    }
 }
 extension MasterTableViewController:UITableViewDataSource{
     //**********************
