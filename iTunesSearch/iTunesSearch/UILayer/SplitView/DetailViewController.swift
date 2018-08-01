@@ -17,8 +17,8 @@ class DetailViewController: UIViewController {
     //**********************
     //MARK:- IBOutlet
     //**********************
-    @IBOutlet weak var imageViewActivityIndicator: UIActivityIndicatorView!
-    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var imageViewActivityIndicator: UIActivityIndicatorView?
+    @IBOutlet weak var imageView: UIImageView?
     @IBOutlet weak var trackNameLabel: UILabel!
     @IBOutlet weak var albumLabel: UILabel!
     @IBOutlet weak var artistLabel: UILabel!
@@ -38,15 +38,15 @@ class DetailViewController: UIViewController {
             DispatchQueue.main.async {
                 switch self.imageViewState {
                 case .fetching:
-                    self.imageView.image = #imageLiteral(resourceName: "placeholder")
-                    self.imageViewActivityIndicator.startAnimating()
+                    self.imageView?.image = #imageLiteral(resourceName: "placeholder")
+                    self.imageViewActivityIndicator?.startAnimating()
                     self.imageView?.alpha = 0.3
                 case .error:
-                    self.imageView.image = #imageLiteral(resourceName: "placeholder")
-                    self.imageViewActivityIndicator.stopAnimating()
+                    self.imageView?.image = #imageLiteral(resourceName: "placeholder")
+                    self.imageViewActivityIndicator?.stopAnimating()
                 case .fetched(let image):
                     self.imageView?.image = image
-                    self.imageViewActivityIndicator.stopAnimating()
+                    self.imageViewActivityIndicator?.stopAnimating()
                     self.imageView?.alpha = 1
                 }
             }
@@ -60,8 +60,10 @@ class DetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        imageView?.layer.masksToBounds = true
+        imageView?.layer.cornerRadius = 100
         // Configure Activity Indicator
-        self.imageViewActivityIndicator.hidesWhenStopped = true
+        self.imageViewActivityIndicator?.hidesWhenStopped = true
     }
 
     override func didReceiveMemoryWarning() {
