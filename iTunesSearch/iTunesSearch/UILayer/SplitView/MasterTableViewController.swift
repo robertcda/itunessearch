@@ -8,44 +8,65 @@
 
 import UIKit
 
+/**********
+ Whoever wants to know the selection of the masterView implement this.
+ **********/
 protocol MasterSelectionDelegate {
     func trackSelected(source:TrackViewModel)
 }
 
 class MasterTableViewController: UITableViewController {
     
+    //**********************
+    //MARK:- View Model
+    //**********************
     var masterViewModel = MasterViewModel()
     
+    //**********************
+    //MARK:- search function variables
+    //**********************
     let searchController = UISearchController(searchResultsController: nil)
     var searchTextRequest: String = ""
     
+    //**********************
+    //MARK:- delegate to enable DetailView.
+    //**********************
     var masterSelectionDelegate:MasterSelectionDelegate? = nil
     
+    //**********************
+    //MARK:- View Life cycle
+    //**********************
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        searchController.searchResultsUpdater = self
-        searchController.hidesNavigationBarDuringPresentation = false
-        searchController.dimsBackgroundDuringPresentation = false
-        searchController.searchBar.sizeToFit()
-        self.tableView.tableHeaderView = searchController.searchBar
-
-        self.masterViewModel.searchResultsUpdatedHandler = {
-            self.tableView.reloadData()
+        self.configureSearch()
+        
+        //Informing the Viewmodel to execute these instructions if the search results change.
+        self.masterViewModel.searchResultsUpdatedHandler = { [weak self] in
+            self?.tableView.reloadData()
         }
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    /**********
+     This method sets up the search controller for the tableView.
+     **********/
+    private func configureSearch(){
+        searchController.searchResultsUpdater = self
+        searchController.hidesNavigationBarDuringPresentation = false
+        searchController.dimsBackgroundDuringPresentation = false
+        searchController.searchBar.sizeToFit()
+        self.tableView.tableHeaderView = searchController.searchBar
+    }
 
-    // MARK: - Table view data source
+    //**********************
+    //MARK:- Table view data source
+    //**********************
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
@@ -53,17 +74,19 @@ class MasterTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        // This has to be as! as this controller cannot deal with any other cell for now.
+        //We can default to UITableViewCell() to avoid crash, but in this case it should crash.
         let cell = tableView.dequeueReusableCell(withIdentifier: "cellIdentifier", for: indexPath) as! MasterTableViewCell
         
         let model = self.masterViewModel.models[indexPath.row]
         // Configure the cell...
         cell.updateFrom(source: model)
-        
-        
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // Just inform the delegate that selection has changed. What it does is not my busisness.
         self.masterSelectionDelegate?.trackSelected(source: self.masterViewModel.models[indexPath.row])
     }
     
@@ -74,55 +97,16 @@ class MasterTableViewController: UITableViewController {
             (cell as? MasterTableViewCell)?.imageViewState = .fetched(image)
         }
     }
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 }
+
+//**********************
+//MARK:- UISearchResultsUpdating
+//**********************
 extension MasterTableViewController:UISearchResultsUpdating{
     func updateSearchResults(for searchController: UISearchController) {
         if let searchText = searchController.searchBar.text{
+            // My Job here is to only inform the ViewModel that search text has changed, let it decide if it needs to update me.
+            // Refer: property of view model searchResultsUpdatedHandler - it would use that property to update me.
             self.masterViewModel.searchFor(searchText: searchText)
         }
     }

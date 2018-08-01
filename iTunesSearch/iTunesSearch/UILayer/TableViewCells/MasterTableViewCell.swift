@@ -16,8 +16,6 @@ protocol MasterTableViewCellDataSource{
     var imageViewState: MasterTableViewCell.ImageState { get }
 }
 
-
-
 class MasterTableViewCell: UITableViewCell {
     enum ImageState{
         case fetching, error, fetched(UIImage)
@@ -34,6 +32,10 @@ class MasterTableViewCell: UITableViewCell {
     @IBOutlet weak var secondRowValueLabel: UILabel!
     @IBOutlet weak var secondRowTitleLabel: UILabel!
     
+    //**********************
+    //MARK:- Image Loding logic
+    //**********************
+
     var imageViewState:ImageState = .fetching{
         didSet{
             DispatchQueue.main.async {
@@ -66,21 +68,17 @@ class MasterTableViewCell: UITableViewCell {
     //**********************
     //MARK:- Activity Indicator
     //**********************
-
     private func configureActivity(){
         imageLoadingActivity.hidesWhenStopped = true
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
     
     //**********************
     //MARK:- Updating from Cells DataSource
     //**********************
-
     func updateFrom(source:MasterTableViewCellDataSource){
         self.firstRowLabelTitleLabel.text = source.firstRowLabelTitleLabel
         self.firstRowValueLabel.text = source.firstRowValueLabel
@@ -98,9 +96,6 @@ class MasterTableViewCell: UITableViewCell {
         self.firstRowValueLabel.text = ""
         self.secondRowTitleLabel.text = ""
         self.secondRowValueLabel.text = ""
-        
         super.prepareForReuse()
     }
-
-
 }

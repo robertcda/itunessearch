@@ -17,7 +17,6 @@ class DetailViewController: UIViewController {
     //**********************
     //MARK:- IBOutlet
     //**********************
-
     @IBOutlet weak var imageViewActivityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var trackNameLabel: UILabel!
@@ -29,14 +28,11 @@ class DetailViewController: UIViewController {
     //**********************
     //MARK:- View Model
     //**********************
-
     var viewModel: TrackViewModel? = nil
-    
     
     //**********************
     //MARK:- ImageView states.
     //**********************
-
     var imageViewState:DetailViewImageState = .fetching{
         didSet{
             DispatchQueue.main.async {
@@ -63,9 +59,9 @@ class DetailViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        // Configure Activity Indicator
         self.imageViewActivityIndicator.hidesWhenStopped = true
-        // Do any additional setup after loading the view.
     }
 
     override func didReceiveMemoryWarning() {
