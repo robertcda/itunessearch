@@ -62,6 +62,10 @@ struct TrackViewModel{
     
 }
 
+//**********************
+//MARK:- MasterTableViewCellDataSource
+//**********************
+
 extension TrackViewModel:MasterTableViewCellDataSource{
     var imageViewState: MasterTableViewCell.ImageState {
         return .fetching
@@ -81,5 +85,29 @@ extension TrackViewModel:MasterTableViewCellDataSource{
     
     var secondRowTitleLabel: String {
         return "Artist:"
+    }
+}
+
+//**********************
+//MARK:- DetailView interface methods.
+//**********************
+
+//TODO: make a protocol for this DetailView.
+extension TrackViewModel{
+    var priceToDisplay: String{
+        if let priceInt = self.track.price{
+            return String(priceInt)
+        }
+        return "Not available"
+    }
+    
+    var releaseDateToDisplay: String{
+        if let releaseDate = self.track.releaseDate{
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "dd-mm-YYYY"
+            
+            return dateFormatter.string(from: releaseDate)
+        }
+        return "Not available"
     }
 }

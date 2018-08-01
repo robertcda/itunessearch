@@ -110,8 +110,8 @@ extension DetailViewController: MasterSelectionDelegate{
         self.trackNameLabel.text = source.track.trackName
         self.albumLabel.text = source.track.albumName
         self.artistLabel.text = source.track.artistName
-        self.priceLabel.text = "\(source.track.price)"
-        self.releaseDateLabel.text = "\(source.track.releaseDate)"
+        self.priceLabel.text = source.priceToDisplay
+        self.releaseDateLabel.text = source.releaseDateToDisplay
         
         self.imageViewState = .fetching
         source.fetchArtwork { [weak self] (image) in
