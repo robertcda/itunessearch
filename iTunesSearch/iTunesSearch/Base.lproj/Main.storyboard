@@ -20,7 +20,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="jcQ-N2-Sez">
-                                <rect key="frame" x="10" y="74" width="394" height="387"/>
+                                <rect key="frame" x="10" y="89" width="394" height="387"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="D6i-eq-bL2">
                                         <rect key="frame" x="97" y="0.0" width="200" height="200"/>
@@ -150,7 +150,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="jcQ-N2-Sez" firstAttribute="top" secondItem="9d2-vF-Hpx" secondAttribute="top" constant="10" id="DhF-h1-LyO"/>
+                            <constraint firstItem="jcQ-N2-Sez" firstAttribute="top" secondItem="9d2-vF-Hpx" secondAttribute="top" constant="25" id="DhF-h1-LyO"/>
                             <constraint firstItem="jcQ-N2-Sez" firstAttribute="leading" secondItem="9d2-vF-Hpx" secondAttribute="leading" constant="10" id="F29-Qi-HsY"/>
                             <constraint firstItem="cLu-v7-lTj" firstAttribute="centerX" secondItem="9d2-vF-Hpx" secondAttribute="centerX" id="RJI-SZ-3Hd"/>
                             <constraint firstItem="cLu-v7-lTj" firstAttribute="centerY" secondItem="9d2-vF-Hpx" secondAttribute="centerY" id="V2O-Tq-MkU"/>

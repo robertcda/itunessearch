@@ -15,6 +15,7 @@ protocol MasterSelectionDelegate {
     func trackSelected(source:TrackViewModel)
 }
 
+//TODO: The naming is incorrect, this is not a tableViewController.
 class MasterTableViewController: UIViewController {
     
     //**********************
@@ -48,12 +49,8 @@ class MasterTableViewController: UIViewController {
 
         self.title = "iTunes Music Search"
         
-        self.tableView.dataSource = self
-        self.tableView.delegate = self
-        
         self.configureSearch()
-        
-        self.tableView.backgroundColor = #colorLiteral(red: 0.9372549057, green: 0.9372549057, blue: 0.9568627477, alpha: 1)
+        self.configureTableView()
 
         //Informing the Viewmodel to execute these instructions if the search results change.
         self.masterViewModel.searchResultsUpdatedHandler = { [weak self] in
@@ -77,7 +74,12 @@ class MasterTableViewController: UIViewController {
         searchController.searchBar.placeholder = "Type to search music"
         self.tableView.tableHeaderView = searchController.searchBar
     }
-
+    
+    private func configureTableView(){
+        self.tableView.backgroundColor = #colorLiteral(red: 0.9372549057, green: 0.9372549057, blue: 0.9568627477, alpha: 1)
+        self.tableView.dataSource = self
+        self.tableView.delegate = self
+    }
     
 }
 extension MasterTableViewController:UITableViewDataSource{
