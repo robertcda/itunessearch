@@ -8,10 +8,6 @@
 
 import UIKit
 
-protocol DetailViewDataSource {
-    
-}
-
 class DetailViewController: UIViewController {
 
     @IBOutlet weak var imageView: UIImageView!
