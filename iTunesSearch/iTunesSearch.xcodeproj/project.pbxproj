@@ -20,6 +20,7 @@
 		E1453F3B2111867B005E4D5A /* NetworkToModelInterpretor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1453F3A2111867B005E4D5A /* NetworkToModelInterpretor.swift */; };
 		E1453F3D211186AE005E4D5A /* Track.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1453F3C211186AE005E4D5A /* Track.swift */; };
 		E1453F3F21119746005E4D5A /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1453F3E21119746005E4D5A /* ViewModel.swift */; };
+		E1453F4121119F5C005E4D5A /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1453F4021119F5C005E4D5A /* DetailViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +60,7 @@
 		E1453F3A2111867B005E4D5A /* NetworkToModelInterpretor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkToModelInterpretor.swift; sourceTree = "<group>"; };
 		E1453F3C211186AE005E4D5A /* Track.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Track.swift; sourceTree = "<group>"; };
 		E1453F3E21119746005E4D5A /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
+		E1453F4021119F5C005E4D5A /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -145,6 +147,7 @@
 			isa = PBXGroup;
 			children = (
 				E1453F2C211176CA005E4D5A /* MasterTableViewController.swift */,
+				E1453F4021119F5C005E4D5A /* DetailViewController.swift */,
 			);
 			path = SplitView;
 			sourceTree = "<group>";
@@ -330,6 +333,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E1453F4121119F5C005E4D5A /* DetailViewController.swift in Sources */,
 				E1453F3B2111867B005E4D5A /* NetworkToModelInterpretor.swift in Sources */,
 				E1453F3921118434005E4D5A /* String+Extensions.swift in Sources */,
 				E1453EFA211172E5005E4D5A /* AppDelegate.swift in Sources */,

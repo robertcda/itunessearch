@@ -16,6 +16,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        
+        guard let splitViewController = window?.rootViewController as? UISplitViewController,
+            let leftNavController = splitViewController.viewControllers.first as? UINavigationController,
+            let masterViewController = leftNavController.topViewController as? MasterTableViewController,
+            let detailNavViewController = splitViewController.viewControllers.last as? UINavigationController,
+        let detailViewController = detailNavViewController.topViewController as? DetailViewController
+            else {
+                fatalError()
+        }
+        
+        masterViewController.masterSelectionDelegate = detailViewController
+        
+//        let firstMonster = masterViewController.monsters.first
+//        detailViewController.monster = firstMonster
+        
         return true
     }
 

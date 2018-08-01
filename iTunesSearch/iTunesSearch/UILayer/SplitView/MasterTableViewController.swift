@@ -8,13 +8,20 @@
 
 import UIKit
 
+protocol MasterSelectionDelegate {
+    func trackSelected(track:Track)
+}
+
 class MasterTableViewController: UITableViewController {
 
     
     var models:[TrackViewModel] = []
     
     let searchController = UISearchController(searchResultsController: nil)
-
+    var searchTextRequest: String = ""
+    
+    var masterSelectionDelegate:MasterSelectionDelegate? = nil
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -51,6 +58,10 @@ class MasterTableViewController: UITableViewController {
         cell.updateFrom(source: model)
         
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.masterSelectionDelegate?.trackSelected(track: self.models[indexPath.row].track)
     }
 
     /*
@@ -97,7 +108,6 @@ class MasterTableViewController: UITableViewController {
         // Pass the selected object to the new view controller.
     }
     */
-    var searchTextRequest: String = ""
 }
 extension MasterTableViewController:UISearchResultsUpdating{
     func updateSearchResults(for searchController: UISearchController) {
