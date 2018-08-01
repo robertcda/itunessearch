@@ -8,6 +8,9 @@
 
 import Foundation
 
+/**********
+ A layer to interpret the JSON responses into the model objects.
+ **********/
 class NetworkToModelInterpretor{
     
     typealias GetTracksCompletion = ([Track],Error?) -> Void

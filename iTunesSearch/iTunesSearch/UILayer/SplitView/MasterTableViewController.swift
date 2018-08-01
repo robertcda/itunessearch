@@ -10,8 +10,19 @@ import UIKit
 
 class MasterTableViewController: UITableViewController {
 
+    
+    var models:[Track] = []
+    
+    let searchController = UISearchController(searchResultsController: nil)
+
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        searchController.searchResultsUpdater = self
+        searchController.hidesNavigationBarDuringPresentation = false
+        searchController.dimsBackgroundDuringPresentation = false
+        searchController.searchBar.sizeToFit()
+        self.tableView.tableHeaderView = searchController.searchBar
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -29,12 +40,14 @@ class MasterTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 10
+        return self.models.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cellIdentifier", for: indexPath)
-
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cellIdentifier", for: indexPath) as! MasterTableViewCell
+        
+        let model = self.models[indexPath.row]
+        cell.label.text = model.artistName ?? ""
         // Configure the cell...
 
         return cell
@@ -84,7 +97,31 @@ class MasterTableViewController: UITableViewController {
         // Pass the selected object to the new view controller.
     }
     */
-
+    var searchTextRequest: String = ""
+}
+extension MasterTableViewController:UISearchResultsUpdating{
+    func updateSearchResults(for searchController: UISearchController) {
+        if let searchText = searchController.searchBar.text{
+            
+            self.searchTextRequest = searchText
+            NetworkToModelInterpretor().getTracks(searchText: searchText) { (tracks, error) in
+                
+                guard self.searchTextRequest == searchText else{
+                    print("OLDER REQUEST: searchText:\(searchText)")
+                    return
+                }
+                
+                print("ResponseFor:searchText:\(searchText), Tracks:\(tracks.count)")
+                
+                self.models.removeAll()
+                self.models.append(contentsOf: tracks)
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+            }
+        }
+    }
+    
 }
 
 

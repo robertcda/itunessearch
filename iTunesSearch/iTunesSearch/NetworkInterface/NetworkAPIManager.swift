@@ -9,7 +9,9 @@
 import Foundation
 
 
-
+/**********
+ All network calls routed through this guy.
+ **********/
 class NetworkAPIManager {
     
     //MARK:- EndPoints

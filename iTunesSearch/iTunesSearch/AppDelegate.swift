@@ -16,9 +16,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        NetworkToModelInterpretor().getTracks(searchText: "Hello world") { (tracks, error) in
-            print(tracks)
-        }
         return true
     }
 
