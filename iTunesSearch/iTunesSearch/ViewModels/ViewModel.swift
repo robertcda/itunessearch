@@ -7,11 +7,35 @@
 //
 
 import Foundation
+import UIKit
 
 class TrackViewModel{
     var track: Track
+    
+    typealias ImageHandler = (UIImage)->Void
+    var thumbnailImageHandler:ImageHandler?
+    
     init(track: Track) {
         self.track = track
+    }
+    
+    func showThumbnailImage(){
+        if let thumbnailPath = self.track.artworkUrl30{
+            NetworkToModelInterpretor().getImage(urlPath: thumbnailPath) { (image, error) in
+                guard error == nil else{
+                    print("TrackViewModel: Unable to fetch image")
+                    return
+                }
+                guard let image = image else{
+                    print("TrackViewModel: No Image returned.")
+                    return
+                }
+                
+                self.thumbnailImageHandler?(image)
+
+            }
+
+        }
     }
 }
 

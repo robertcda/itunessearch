@@ -57,11 +57,21 @@ class MasterTableViewController: UITableViewController {
         // Configure the cell...
         cell.updateFrom(source: model)
         
+        model.thumbnailImageHandler = { image in
+            cell.imageViewState = .fetched(image)
+        }
+        
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.masterSelectionDelegate?.trackSelected(source: self.models[indexPath.row])
+    }
+    
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        let model = self.models[indexPath.row]
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cellIdentifier", for: indexPath) as! MasterTableViewCell
+        model.showThumbnailImage()
     }
 
     /*

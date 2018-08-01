@@ -36,16 +36,20 @@ class MasterTableViewCell: UITableViewCell {
     
     var imageViewState:ImageState = .fetching{
         didSet{
-            switch imageViewState {
-            case .fetching:
-                self.imageLoadingActivity.startAnimating()
-                self.imageView?.alpha = 0.3
-            case .error:
-                self.imageLoadingActivity.stopAnimating()
-            case .fetched(let image):
-                self.imageView?.image = image
-                self.imageLoadingActivity.stopAnimating()
-                self.imageView?.alpha = 1
+            DispatchQueue.main.async {
+                switch self.imageViewState {
+                case .fetching:
+                    self.leftImageView.image = #imageLiteral(resourceName: "placeholder")
+                    self.imageLoadingActivity.startAnimating()
+                    self.imageView?.alpha = 0.3
+                case .error:
+                    self.leftImageView.image = #imageLiteral(resourceName: "placeholder")
+                    self.imageLoadingActivity.stopAnimating()
+                case .fetched(let image):
+                    self.imageView?.image = image
+                    self.imageLoadingActivity.stopAnimating()
+                    self.imageView?.alpha = 1
+                }
             }
         }
     }
@@ -55,7 +59,6 @@ class MasterTableViewCell: UITableViewCell {
         // Initialization code
         
         //Make the image view to contain a palceholder.
-        leftImageView.image = #imageLiteral(resourceName: "placeholder")
         // Configure activity indicator
         self.configureActivity()
     }
@@ -85,5 +88,19 @@ class MasterTableViewCell: UITableViewCell {
         self.secondRowValueLabel.text = source.secondRowValueLabel
         self.imageViewState = source.imageViewState
     }
+    
+    //**********************
+    //MARK:- Resuse
+    //**********************
+    override func prepareForReuse() {
+        self.imageViewState = .fetching
+        self.firstRowLabelTitleLabel.text = ""
+        self.firstRowValueLabel.text = ""
+        self.secondRowTitleLabel.text = ""
+        self.secondRowValueLabel.text = ""
+        
+        super.prepareForReuse()
+    }
+
 
 }

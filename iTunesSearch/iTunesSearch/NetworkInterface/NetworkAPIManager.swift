@@ -14,14 +14,19 @@ import Foundation
  **********/
 class NetworkAPIManager {
     
+    let defaultSession = URLSession(configuration: .default)
+    
+    
     //MARK:- EndPoints
     enum Endpoint{
         case iTunesSearch(searchParameter:String)
-        
+        case imageFetch(urlPath:String)
         var url: URL?{
             switch self {
             case .iTunesSearch(let searchParameter):
                 return URL(string: "https://itunes.apple.com/search?term=\(searchParameter.replaceSpaceWithAPlus)")
+            case .imageFetch(let urlPath):
+                return URL(string: urlPath)
             }
         }
     }
@@ -33,17 +38,48 @@ class NetworkAPIManager {
     
     //MARK:- Network Calls
     
-    typealias APIResponseType = [String:Any]
-    typealias CompletionHandler = (Error?,APIResponseType?) -> Void
+    
+    
+    //**********************
+    //MARK:- GetImage
+    //**********************
+    typealias DataFromCompletionHandler = (Error?,Data?) -> Void
+
+    func dataFrom(endPoint:Endpoint, completion:@escaping DataFromCompletionHandler){
+        if let url = endPoint.url{
+            print("url:\(url)")
+            let dataTask = defaultSession.dataTask(with: url) { (data, urlresponse, error) in
+                // First establish the return value
+                var errorToReturn = error
+                var dataObject:Data? = data
+                
+                guard errorToReturn == nil else{
+                    print("NetworkAPIManager:dataFrom: Error: \(String(describing: error))")
+                    return
+                }
+                
+                /**********
+                 Note: sometimes due to many conditional checks we may miss to call completion which may lead to someone waiting infitintly, but by using Defer, we ensure that no matter what the completion is called at a relatively smaller cost.
+                 **********/
+                defer{
+                    completion(errorToReturn,dataObject)
+                }
+            }
+            dataTask.resume()
+        }
+    }
+    
     
     /**********
      GetData: used to establish a download task for a particular endpoint.
      **********/
-    func getdata(endPoint:Endpoint, completion:@escaping CompletionHandler) {
-        let urlSession = URLSession(configuration: .default)
+    typealias APIResponseType = [String:Any]
+    typealias DownloadJsonCompletionHandler = (Error?,APIResponseType?) -> Void
+    
+    func downloadJsonFrom(endPoint:Endpoint, completion:@escaping DownloadJsonCompletionHandler) {
         if let url = endPoint.url{
             print("url:\(url)")
-            let downloadTask = urlSession.downloadTask(with: url) { (url, urlResponse, error) in
+            let downloadTask = defaultSession.downloadTask(with: url) { (url, urlResponse, error) in
                 
                 // First establish the return value
                 var errorToReturn = error
