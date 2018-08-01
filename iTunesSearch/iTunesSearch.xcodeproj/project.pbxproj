@@ -8,13 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		E1453EFA211172E5005E4D5A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1453EF9211172E5005E4D5A /* AppDelegate.swift */; };
-		E1453EFC211172E5005E4D5A /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1453EFB211172E5005E4D5A /* MasterViewController.swift */; };
-		E1453EFE211172E5005E4D5A /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1453EFD211172E5005E4D5A /* DetailViewController.swift */; };
 		E1453F01211172E5005E4D5A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E1453EFF211172E5005E4D5A /* Main.storyboard */; };
 		E1453F03211172E6005E4D5A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E1453F02211172E6005E4D5A /* Assets.xcassets */; };
 		E1453F06211172E6005E4D5A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E1453F04211172E6005E4D5A /* LaunchScreen.storyboard */; };
 		E1453F11211172E6005E4D5A /* iTunesSearchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1453F10211172E6005E4D5A /* iTunesSearchTests.swift */; };
 		E1453F1C211172E6005E4D5A /* iTunesSearchUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1453F1B211172E6005E4D5A /* iTunesSearchUITests.swift */; };
+		E1453F2D211176CA005E4D5A /* MasterTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1453F2C211176CA005E4D5A /* MasterTableViewController.swift */; };
+		E1453F3021117828005E4D5A /* MasterTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1453F2F21117828005E4D5A /* MasterTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,8 +37,6 @@
 /* Begin PBXFileReference section */
 		E1453EF6211172E5005E4D5A /* iTunesSearch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iTunesSearch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1453EF9211172E5005E4D5A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		E1453EFB211172E5005E4D5A /* MasterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
-		E1453EFD211172E5005E4D5A /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		E1453F00211172E5005E4D5A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		E1453F02211172E6005E4D5A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E1453F05211172E6005E4D5A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -49,6 +47,8 @@
 		E1453F17211172E6005E4D5A /* iTunesSearchUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iTunesSearchUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1453F1B211172E6005E4D5A /* iTunesSearchUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iTunesSearchUITests.swift; sourceTree = "<group>"; };
 		E1453F1D211172E6005E4D5A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E1453F2C211176CA005E4D5A /* MasterTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterTableViewController.swift; sourceTree = "<group>"; };
+		E1453F2F21117828005E4D5A /* MasterTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,9 +99,9 @@
 		E1453EF8211172E5005E4D5A /* iTunesSearch */ = {
 			isa = PBXGroup;
 			children = (
+				E1453F2E21117805005E4D5A /* TableViewCells */,
+				E1453F2921117662005E4D5A /* SplitView */,
 				E1453EF9211172E5005E4D5A /* AppDelegate.swift */,
-				E1453EFB211172E5005E4D5A /* MasterViewController.swift */,
-				E1453EFD211172E5005E4D5A /* DetailViewController.swift */,
 				E1453EFF211172E5005E4D5A /* Main.storyboard */,
 				E1453F02211172E6005E4D5A /* Assets.xcassets */,
 				E1453F04211172E6005E4D5A /* LaunchScreen.storyboard */,
@@ -126,6 +126,22 @@
 				E1453F1D211172E6005E4D5A /* Info.plist */,
 			);
 			path = iTunesSearchUITests;
+			sourceTree = "<group>";
+		};
+		E1453F2921117662005E4D5A /* SplitView */ = {
+			isa = PBXGroup;
+			children = (
+				E1453F2C211176CA005E4D5A /* MasterTableViewController.swift */,
+			);
+			path = SplitView;
+			sourceTree = "<group>";
+		};
+		E1453F2E21117805005E4D5A /* TableViewCells */ = {
+			isa = PBXGroup;
+			children = (
+				E1453F2F21117828005E4D5A /* MasterTableViewCell.swift */,
+			);
+			path = TableViewCells;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -259,9 +275,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E1453EFE211172E5005E4D5A /* DetailViewController.swift in Sources */,
-				E1453EFC211172E5005E4D5A /* MasterViewController.swift in Sources */,
 				E1453EFA211172E5005E4D5A /* AppDelegate.swift in Sources */,
+				E1453F3021117828005E4D5A /* MasterTableViewCell.swift in Sources */,
+				E1453F2D211176CA005E4D5A /* MasterTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
