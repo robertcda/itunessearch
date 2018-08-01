@@ -21,7 +21,7 @@
 		E1453F3921118434005E4D5A /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1453F3821118434005E4D5A /* String+Extensions.swift */; };
 		E1453F3B2111867B005E4D5A /* NetworkToModelInterpretor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1453F3A2111867B005E4D5A /* NetworkToModelInterpretor.swift */; };
 		E1453F3D211186AE005E4D5A /* Track.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1453F3C211186AE005E4D5A /* Track.swift */; };
-		E1453F3F21119746005E4D5A /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1453F3E21119746005E4D5A /* ViewModel.swift */; };
+		E1453F3F21119746005E4D5A /* TrackViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1453F3E21119746005E4D5A /* TrackViewModel.swift */; };
 		E1453F4121119F5C005E4D5A /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1453F4021119F5C005E4D5A /* DetailViewController.swift */; };
 		E1453F432111B9B0005E4D5A /* MasterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1453F422111B9B0005E4D5A /* MasterViewModel.swift */; };
 		E1453F452111DFF6005E4D5A /* TrackTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1453F442111DFF6005E4D5A /* TrackTests.swift */; };
@@ -67,7 +67,7 @@
 		E1453F3821118434005E4D5A /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		E1453F3A2111867B005E4D5A /* NetworkToModelInterpretor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkToModelInterpretor.swift; sourceTree = "<group>"; };
 		E1453F3C211186AE005E4D5A /* Track.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Track.swift; sourceTree = "<group>"; };
-		E1453F3E21119746005E4D5A /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
+		E1453F3E21119746005E4D5A /* TrackViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackViewModel.swift; sourceTree = "<group>"; };
 		E1453F4021119F5C005E4D5A /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		E1453F422111B9B0005E4D5A /* MasterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterViewModel.swift; sourceTree = "<group>"; };
 		E1453F442111DFF6005E4D5A /* TrackTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackTests.swift; sourceTree = "<group>"; };
@@ -206,7 +206,7 @@
 		E1453F3421117DCF005E4D5A /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
-				E1453F3E21119746005E4D5A /* ViewModel.swift */,
+				E1453F3E21119746005E4D5A /* TrackViewModel.swift */,
 				E1453F422111B9B0005E4D5A /* MasterViewModel.swift */,
 			);
 			path = ViewModels;
@@ -367,7 +367,7 @@
 				E1453F3721117E04005E4D5A /* NetworkAPIManager.swift in Sources */,
 				E1453F3021117828005E4D5A /* MasterTableViewCell.swift in Sources */,
 				E1453F2D211176CA005E4D5A /* MasterTableViewController.swift in Sources */,
-				E1453F3F21119746005E4D5A /* ViewModel.swift in Sources */,
+				E1453F3F21119746005E4D5A /* TrackViewModel.swift in Sources */,
 				E1453F3D211186AE005E4D5A /* Track.swift in Sources */,
 				E105658E2112236000984050 /* iTunesSearchSplitViewController.swift in Sources */,
 			);
