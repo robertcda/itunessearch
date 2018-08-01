@@ -12,6 +12,7 @@ import Foundation
 
 class NetworkAPIManager {
     
+    //MARK:- EndPoints
     enum Endpoint{
         case iTunesSearch(searchParameter:String)
         
@@ -23,44 +24,61 @@ class NetworkAPIManager {
         }
     }
     
-    /**********
-     https://itunes.apple.com/search?term=SEARCHTERM1+SEARCHTERM2
-     **********/
+    //MARK:- Errors
+    enum ErrorsNetworkAPIManager: Error{
+        case jsonSerializationFailed, unableToReadContentsOfURL
+    }
+    
+    //MARK:- Network Calls
     
     typealias APIResponseType = [String:Any]
     typealias CompletionHandler = (Error?,APIResponseType?) -> Void
     
+    /**********
+     GetData: used to establish a download task for a particular endpoint.
+     **********/
     func getdata(endPoint:Endpoint, completion:@escaping CompletionHandler) {
         let urlSession = URLSession(configuration: .default)
         if let url = endPoint.url{
             print("url:\(url)")
             let downloadTask = urlSession.downloadTask(with: url) { (url, urlResponse, error) in
-                guard error == nil else{
-                    print("Error: \(error)")
+                
+                // First establish the return value
+                var errorToReturn = error
+                var dataObject:[String:Any]? = nil
+                
+                guard errorToReturn == nil else{
+                    print("NetworkAPIManager:getData: Error: \(String(describing: error))")
                     return
                 }
+                
                 if let url = url{
-                    print("Downloaded file available at \(url)")
                     if let data = try? Data(contentsOf: url){
                         do{
                             let jsonObject = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
                             if let jsonObjectDictionary = jsonObject as? [String:Any]{
-                                print("\(jsonObjectDictionary.count)")
-                                completion(nil,jsonObjectDictionary)
+                                dataObject = jsonObjectDictionary
                             }
-                            print("jsonObject: \(jsonObject)")
                             
                         }catch let e{
-                            print("JSON Serialization Failed: \(e)")
+                            print("NetworkAPIManager:getData: during JSON Serialization error: \(e)")
+                            errorToReturn = ErrorsNetworkAPIManager.jsonSerializationFailed
                         }
                     }else{
-                        print("Error converting file to Data")
+                        print("NetworkAPIManager:getData: unableToReadContentsOfURL")
+                        errorToReturn = ErrorsNetworkAPIManager.unableToReadContentsOfURL
                     }
                     
                 }
+                
+                /**********
+                 Note this pattern: sometimes due to many conditional checks we may miss to call completion which may lead to someone waiting infitintly, but by using Defer, we ensure that no matter what the completion is called at a relatively smaller cost.
+                 **********/
+                defer{
+                    completion(errorToReturn,dataObject)
+                }
             }
             downloadTask.resume()
-            
         }
         
     }
