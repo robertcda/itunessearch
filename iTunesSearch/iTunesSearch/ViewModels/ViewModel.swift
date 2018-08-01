@@ -95,10 +95,18 @@ extension TrackViewModel:MasterTableViewCellDataSource{
 //TODO: make a protocol for this DetailView.
 extension TrackViewModel{
     var priceToDisplay: String{
-        if let priceInt = self.track.price{
-            return String(priceInt)
+        var displayPrice = "Not Available"
+
+        guard let currency = self.track.currency else{
+            return displayPrice
         }
-        return "Not available"
+        guard let priceInt = self.track.price else{
+            return displayPrice
+        }
+
+        displayPrice = String(priceInt) + " " + currency
+        
+        return displayPrice
     }
     
     var releaseDateToDisplay: String{
@@ -109,5 +117,18 @@ extension TrackViewModel{
             return dateFormatter.string(from: releaseDate)
         }
         return "Not available"
+    }
+    
+    var detailTitleToDisplay: String{
+        var displayTitle = ""
+        
+        guard let name = self.track.trackName else{
+            return displayTitle
+        }
+        guard let artist = self.track.artistName else{
+            return displayTitle
+        }
+        displayTitle = name + "(" + artist + ")"
+        return displayTitle
     }
 }

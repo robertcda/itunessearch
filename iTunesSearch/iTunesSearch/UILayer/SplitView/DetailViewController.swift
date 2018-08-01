@@ -92,7 +92,26 @@ class DetailViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    //**********************
+    //MARK:- UpdateFrom ViewModel
+    //**********************
+    private func updateFromViewModel(){
+        guard let viewModel = self.viewModel else {
+            return
+        }
+        // update thhe UI with the details from the View Model.
+        self.title = viewModel.detailTitleToDisplay
+        self.trackNameLabel.text = viewModel.track.trackName
+        self.albumLabel.text = viewModel.track.albumName
+        self.artistLabel.text = viewModel.track.artistName
+        self.priceLabel.text = viewModel.priceToDisplay
+        self.releaseDateLabel.text = viewModel.releaseDateToDisplay
+        
+        self.imageViewState = .fetching
+        viewModel.fetchArtwork { [weak self] (image) in
+            self?.imageViewState = .fetched(image)
+        }
+    }
 }
 
 //**********************
@@ -101,21 +120,13 @@ class DetailViewController: UIViewController {
 
 extension DetailViewController: MasterSelectionDelegate{
     func trackSelected(source: TrackViewModel) {
+        //Update UI to be selected.
         self.updateDetailViewState(state: .selected)
-        //Show the main stack view.
-        mainStackView.isHidden = false
-        
+
+        //Update the ViewModel
         self.viewModel = source
         
-        self.trackNameLabel.text = source.track.trackName
-        self.albumLabel.text = source.track.albumName
-        self.artistLabel.text = source.track.artistName
-        self.priceLabel.text = source.priceToDisplay
-        self.releaseDateLabel.text = source.releaseDateToDisplay
-        
-        self.imageViewState = .fetching
-        source.fetchArtwork { [weak self] (image) in
-            self?.imageViewState = .fetched(image)
-        }
+        // Update the UI from the ViewModel
+        self.updateFromViewModel()
     }
 }

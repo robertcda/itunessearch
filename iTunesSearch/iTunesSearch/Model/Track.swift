@@ -27,6 +27,9 @@ struct Track {
     
     let albumName: String?
     let price: Double?
+    
+    let currency: String?
+    
     let releaseDate: Date?
     
     let artworkUrl30: String?
@@ -39,7 +42,10 @@ struct Track {
         self.trackId = dictionary["trackId",default: ""] as? Int
         
         self.albumName = dictionary["collectionName",default: ""] as? String
+
         self.price = dictionary["trackPrice",default: ""] as? Double
+        self.currency = dictionary["currency",default: ""] as? String
+
         if let dateString = dictionary["releaseDate",default: ""] as? String{
             self.releaseDate = dateString.dateFromTrackFormat()
         }else{
