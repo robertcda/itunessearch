@@ -19,6 +19,7 @@
 		E1453F3921118434005E4D5A /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1453F3821118434005E4D5A /* String+Extensions.swift */; };
 		E1453F3B2111867B005E4D5A /* NetworkToModelInterpretor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1453F3A2111867B005E4D5A /* NetworkToModelInterpretor.swift */; };
 		E1453F3D211186AE005E4D5A /* Track.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1453F3C211186AE005E4D5A /* Track.swift */; };
+		E1453F3F21119746005E4D5A /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1453F3E21119746005E4D5A /* ViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +58,7 @@
 		E1453F3821118434005E4D5A /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		E1453F3A2111867B005E4D5A /* NetworkToModelInterpretor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkToModelInterpretor.swift; sourceTree = "<group>"; };
 		E1453F3C211186AE005E4D5A /* Track.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Track.swift; sourceTree = "<group>"; };
+		E1453F3E21119746005E4D5A /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -184,6 +186,7 @@
 		E1453F3421117DCF005E4D5A /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				E1453F3E21119746005E4D5A /* ViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -333,6 +336,7 @@
 				E1453F3721117E04005E4D5A /* NetworkAPIManager.swift in Sources */,
 				E1453F3021117828005E4D5A /* MasterTableViewCell.swift in Sources */,
 				E1453F2D211176CA005E4D5A /* MasterTableViewController.swift in Sources */,
+				E1453F3F21119746005E4D5A /* ViewModel.swift in Sources */,
 				E1453F3D211186AE005E4D5A /* Track.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

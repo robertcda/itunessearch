@@ -8,10 +8,20 @@
 
 import UIKit
 
+protocol MasterTableViewCellDataSource{
+    var firstRowLabelTitleLabel: String { get }
+    var firstRowValueLabel: String { get }
+    var secondRowValueLabel: String { get }
+    var secondRowTitleLabel: String { get }
+}
+
 class MasterTableViewCell: UITableViewCell {
 
     @IBOutlet weak var leftImageView: UIImageView!
-    @IBOutlet weak var label: UILabel!
+    @IBOutlet weak var firstRowLabelTitleLabel: UILabel!
+    @IBOutlet weak var firstRowValueLabel: UILabel!
+    @IBOutlet weak var secondRowValueLabel: UILabel!
+    @IBOutlet weak var secondRowTitleLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -22,6 +32,14 @@ class MasterTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
+    }
+    
+    func updateFrom(source:MasterTableViewCellDataSource){
+        self.firstRowLabelTitleLabel.text = source.firstRowLabelTitleLabel
+        self.firstRowValueLabel.text = source.firstRowValueLabel
+        
+        self.secondRowTitleLabel.text = source.secondRowTitleLabel
+        self.secondRowValueLabel.text = source.secondRowValueLabel
     }
 
 }

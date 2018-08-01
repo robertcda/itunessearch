@@ -11,7 +11,7 @@ import UIKit
 class MasterTableViewController: UITableViewController {
 
     
-    var models:[Track] = []
+    var models:[TrackViewModel] = []
     
     let searchController = UISearchController(searchResultsController: nil)
 
@@ -47,9 +47,9 @@ class MasterTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cellIdentifier", for: indexPath) as! MasterTableViewCell
         
         let model = self.models[indexPath.row]
-        cell.label.text = model.artistName ?? ""
         // Configure the cell...
-
+        cell.updateFrom(source: model)
+        
         return cell
     }
 
@@ -114,7 +114,8 @@ extension MasterTableViewController:UISearchResultsUpdating{
                 print("ResponseFor:searchText:\(searchText), Tracks:\(tracks.count)")
                 
                 self.models.removeAll()
-                self.models.append(contentsOf: tracks)
+                self.models.append(contentsOf: tracks.map({ TrackViewModel(track: $0)}))
+                
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
                 }
