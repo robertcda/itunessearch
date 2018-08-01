@@ -65,6 +65,7 @@ class MasterTableViewCell: UITableViewCell {
         //Make the image view to contain a palceholder.
         // Configure activity indicator
         self.configureActivity()
+        self.backgroundColor = UIColor.clear
     }
 
     //**********************

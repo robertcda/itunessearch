@@ -43,6 +43,8 @@ class MasterTableViewController: UITableViewController {
         self.title = "iTunes Music Search"
         self.configureSearch()
         
+        self.tableView.backgroundColor = #colorLiteral(red: 0.9372549057, green: 0.9372549057, blue: 0.9568627477, alpha: 1)
+
         //Informing the Viewmodel to execute these instructions if the search results change.
         self.masterViewModel.searchResultsUpdatedHandler = { [weak self] in
             self?.tableView.reloadData()

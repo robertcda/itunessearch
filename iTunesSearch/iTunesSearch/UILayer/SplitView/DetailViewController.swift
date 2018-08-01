@@ -81,6 +81,8 @@ class DetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.view.backgroundColor = #colorLiteral(red: 0.9372549057, green: 0.9372549057, blue: 0.9568627477, alpha: 1)
+
         self.updateDetailViewState(state: .noSelection)
         imageView?.layer.masksToBounds = true
         imageView?.layer.cornerRadius = 100
