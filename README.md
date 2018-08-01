@@ -5,21 +5,21 @@ Works on iPhone and iPad.
 
 ## Proud of
 
-Network Layer, Model Interpretation, View Model
-- Separated the Network APi and model interpretation, which allowed me to simulate API mocking.
-- Basically Network Layer doesnt know business and ModelInterpretator bridges that to the application.
+- Network Layer, Model Interpretation, View Model
+-- Separated the Network APi and model interpretation, which allowed me to simulate API mocking.
+-- Basically Network Layer doesnt know business and ModelInterpretator bridges that to the application.
 
-Used MockAPI to test.
-- Since i was not allowed to use any 3rd party app, i thought that the best way to mock APis would be to introduce dependency injection at the construction of the ModelInterpretor, which allowed me to mock the APIs.
+- Used MockAPI to test.
+-- Since i was not allowed to use any 3rd party app, i thought that the best way to mock APis would be to introduce dependency injection at the construction of the ModelInterpretor, which allowed me to mock the APIs.
 
-Using Screen real estate better on iPhone and iPad using traits.
-- A basic thing but made the UI to be a bit different in iPhone and iPad.
+- Using Screen real estate better on iPhone and iPad using traits.
+-- A basic thing but made the UI to be a bit different in iPhone and iPad.
 
-ImageState to maintain the state of the ImageView in the masterCell and detailCell.
-- To maintain if the image is availabe for a cell, I introduced states, which help in better code readability.
-- yes, I enjoy writing enums in swift :)
+- ImageState to maintain the state of the ImageView in the masterCell and detailCell.
+-- To maintain if the image is availabe for a cell, I introduced states, which help in better code readability.
+-- yes, I enjoy writing enums in swift :)
 
-Tried to write and rewrite quite a bit of the code to ensure that less code does more.
+- Tried to write and rewrite quite a bit of the code to ensure that less code does more.
 
 ## Improvements
 
