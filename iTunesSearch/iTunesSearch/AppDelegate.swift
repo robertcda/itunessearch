@@ -16,9 +16,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        NetworkAPIManager().getdata(endPoint: .iTunesSearch(searchParameter: "Hello world")) { (error, dataObject) in
-            print("Error:\(error)")
-            print("dataObject: \(dataObject)")
+        NetworkToModelInterpretor().getTracks(searchText: "Hello world") { (tracks, error) in
+            print(tracks)
         }
         return true
     }
