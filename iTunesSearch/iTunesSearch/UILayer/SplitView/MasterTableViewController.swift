@@ -67,6 +67,9 @@ class MasterTableViewController: UIViewController {
      This method sets up the search controller for the tableView.
      **********/
     private func configureSearch(){
+        // added this to ensure that the searchController doesn't stay on screen when showing the detail on iPhone.
+        self.definesPresentationContext = true
+
         searchController.searchResultsUpdater = self
         searchController.hidesNavigationBarDuringPresentation = false
         searchController.dimsBackgroundDuringPresentation = false
