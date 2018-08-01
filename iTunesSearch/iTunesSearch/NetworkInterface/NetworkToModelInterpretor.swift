@@ -31,7 +31,6 @@ class NetworkToModelInterpretor{
                 return
             }
             guard let dataObject = data else{
-                
                 return
             }
             image = UIImage(data: dataObject)

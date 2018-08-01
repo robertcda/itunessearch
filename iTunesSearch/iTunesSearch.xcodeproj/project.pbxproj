@@ -22,6 +22,7 @@
 		E1453F3F21119746005E4D5A /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1453F3E21119746005E4D5A /* ViewModel.swift */; };
 		E1453F4121119F5C005E4D5A /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1453F4021119F5C005E4D5A /* DetailViewController.swift */; };
 		E1453F432111B9B0005E4D5A /* MasterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1453F422111B9B0005E4D5A /* MasterViewModel.swift */; };
+		E1453F452111DFF6005E4D5A /* TrackTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1453F442111DFF6005E4D5A /* TrackTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +64,7 @@
 		E1453F3E21119746005E4D5A /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		E1453F4021119F5C005E4D5A /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		E1453F422111B9B0005E4D5A /* MasterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterViewModel.swift; sourceTree = "<group>"; };
+		E1453F442111DFF6005E4D5A /* TrackTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -132,6 +134,7 @@
 			children = (
 				E1453F10211172E6005E4D5A /* iTunesSearchTests.swift */,
 				E1453F12211172E6005E4D5A /* Info.plist */,
+				E1453F442111DFF6005E4D5A /* TrackTests.swift */,
 			);
 			path = iTunesSearchTests;
 			sourceTree = "<group>";
@@ -354,6 +357,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E1453F11211172E6005E4D5A /* iTunesSearchTests.swift in Sources */,
+				E1453F452111DFF6005E4D5A /* TrackTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
