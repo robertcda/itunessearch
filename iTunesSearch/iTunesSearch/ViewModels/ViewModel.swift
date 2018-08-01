@@ -16,6 +16,10 @@ class TrackViewModel{
 }
 
 extension TrackViewModel:MasterTableViewCellDataSource{
+    var imageViewState: MasterTableViewCell.ImageState {
+        return .fetching
+    }
+    
     var firstRowLabelTitleLabel: String {
         return "Track:"
     }
@@ -31,6 +35,4 @@ extension TrackViewModel:MasterTableViewCellDataSource{
     var secondRowTitleLabel: String {
         return "Artist:"
     }
-    
-    
 }
