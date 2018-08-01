@@ -57,9 +57,6 @@ class MasterTableViewController: UITableViewController {
         // Configure the cell...
         cell.updateFrom(source: model)
         
-        model.thumbnailImageHandler = { image in
-            cell.imageViewState = .fetched(image)
-        }
         
         return cell
     }
@@ -69,9 +66,11 @@ class MasterTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        // Delay the fecth of the images only until the cell is going to be displayed.
         let model = self.models[indexPath.row]
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cellIdentifier", for: indexPath) as! MasterTableViewCell
-        model.showThumbnailImage()
+        model.showThumbnailImage { [weak cell] (image) in
+            (cell as? MasterTableViewCell)?.imageViewState = .fetched(image)
+        }
     }
 
     /*

@@ -10,6 +10,11 @@ import UIKit
 
 class DetailViewController: UIViewController {
 
+    enum DetailViewImageState{
+        case fetching, error, fetched(UIImage)
+    }
+    
+    @IBOutlet weak var imageViewActivityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var trackNameLabel: UILabel!
     @IBOutlet weak var albumLabel: UILabel!
@@ -17,9 +22,31 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var priceLabel: UILabel!
     @IBOutlet weak var releaseDateLabel: UILabel!
     
+    var source: TrackViewModel? = nil
+    var imageViewState:DetailViewImageState = .fetching{
+        didSet{
+            DispatchQueue.main.async {
+                switch self.imageViewState {
+                case .fetching:
+                    self.imageView.image = #imageLiteral(resourceName: "placeholder")
+                    self.imageViewActivityIndicator.startAnimating()
+                    self.imageView?.alpha = 0.3
+                case .error:
+                    self.imageView.image = #imageLiteral(resourceName: "placeholder")
+                    self.imageViewActivityIndicator.stopAnimating()
+                case .fetched(let image):
+                    self.imageView?.image = image
+                    self.imageViewActivityIndicator.stopAnimating()
+                    self.imageView?.alpha = 1
+                }
+            }
+        }
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.imageViewActivityIndicator.hidesWhenStopped = true
         // Do any additional setup after loading the view.
     }
 
@@ -48,6 +75,12 @@ extension DetailViewController: MasterSelectionDelegate{
         self.artistLabel.text = source.track.artistName
         self.priceLabel.text = "\(source.track.price)"
         self.releaseDateLabel.text = "\(source.track.releaseDate)"
+        
+        self.imageViewState = .fetching
+        source.fetchArtwork { (image) in
+            self.imageViewState = .fetched(image)
+        }
+        
     }
     
     

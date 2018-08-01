@@ -13,17 +13,22 @@ class TrackViewModel{
     var track: Track
     
     typealias ImageHandler = (UIImage)->Void
-    var thumbnailImageHandler:ImageHandler?
     
     init(track: Track) {
         self.track = track
     }
     
-    func showThumbnailImage(){
+    /**********
+     Fetches the thumbnail
+     **********/
+    func showThumbnailImage(thumbnailImageHandler:@escaping ImageHandler){
+        
+        //TODO: here we are taking always the 30 as the thumbnail, but what if for some reason the get fails or the resources is not existing, then i would like to retry with the 60 url and then 90 url, as a fallback.
+        
         if let thumbnailPath = self.track.artworkUrl30{
             NetworkToModelInterpretor().getImage(urlPath: thumbnailPath) { (image, error) in
                 guard error == nil else{
-                    print("TrackViewModel: Unable to fetch image")
+                    print("TrackViewModel: Unable to fetch image: \(String(describing: error))")
                     return
                 }
                 guard let image = image else{
@@ -31,10 +36,25 @@ class TrackViewModel{
                     return
                 }
                 
-                self.thumbnailImageHandler?(image)
-
+                thumbnailImageHandler(image)
             }
-
+        }
+    }
+    
+    func fetchArtwork(thumbnailImageHandler:@escaping ImageHandler){
+        if let thumbnailPath = self.track.artworkUrl100{
+            NetworkToModelInterpretor().getImage(urlPath: thumbnailPath) { (image, error) in
+                guard error == nil else{
+                    print("TrackViewModel:fetchArtwork: Unable to fetch image: \(String(describing: error))")
+                    return
+                }
+                guard let image = image else{
+                    print("TrackViewModel:fetchArtwork: No Image returned.")
+                    return
+                }
+                
+                thumbnailImageHandler(image)
+            }
         }
     }
 }
