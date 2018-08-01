@@ -81,7 +81,6 @@ class NetworkAPIManager {
     func downloadJsonFrom(endPoint:Endpoint, completion:@escaping DownloadJsonCompletionHandler) {
         DispatchQueue.global().async {
             if let url = endPoint.url{
-                print("url:\(url)")
                 let downloadTask = self.defaultSession.downloadTask(with: url) { (url, urlResponse, error) in
                     
                     // First establish the return value
