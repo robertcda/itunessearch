@@ -1,5 +1,5 @@
 //
-//  iTunesSearchTests.swift
+//  StringExtensionsTest.swift
 //  iTunesSearchTests
 //
 //  Created by robert on 01/08/18.
@@ -9,7 +9,7 @@
 import XCTest
 @testable import iTunesSearch
 
-class iTunesSearchTests: XCTestCase {
+class StringExtensionsTest: XCTestCase {
     
     override func setUp() {
         super.setUp()
@@ -21,16 +21,12 @@ class iTunesSearchTests: XCTestCase {
         super.tearDown()
     }
     
-    func testExample() {
+    func testSpaceReplacement() {
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
-    
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
+        XCTAssertEqual("A B".replaceSpaceWithAPlus, "A+B")
+        XCTAssertEqual("A B C".replaceSpaceWithAPlus, "A+B+C")
+        XCTAssertEqual("A".replaceSpaceWithAPlus, "A")
     }
     
 }
