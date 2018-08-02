@@ -18,6 +18,7 @@ class DetailViewController: UIViewController {
     //MARK:- IBOutlet
     //**********************
     @IBOutlet weak var imageViewActivityIndicator: UIActivityIndicatorView?
+    @IBOutlet weak var backgroundImageView: UIImageView!
     @IBOutlet weak var imageView: UIImageView?
     @IBOutlet weak var trackNameLabel: UILabel!
     @IBOutlet weak var albumLabel: UILabel!
@@ -41,15 +42,24 @@ class DetailViewController: UIViewController {
                 switch self.imageViewState {
                 case .fetching:
                     self.imageView?.image = #imageLiteral(resourceName: "placeholder")
-                    self.imageViewActivityIndicator?.startAnimating()
                     self.imageView?.alpha = 0.3
+                    
+                    self.backgroundImageView?.image = #imageLiteral(resourceName: "placeholder")
+                    self.backgroundImageView?.alpha = 0.3
+
+                    self.imageViewActivityIndicator?.startAnimating()
                 case .error:
                     self.imageView?.image = #imageLiteral(resourceName: "no-image")
+                    self.backgroundImageView?.image = nil
                     self.imageViewActivityIndicator?.stopAnimating()
                 case .fetched(let image):
-                    self.imageView?.image = image
                     self.imageViewActivityIndicator?.stopAnimating()
+
+                    self.imageView?.image = image
                     self.imageView?.alpha = 1
+                    
+                    self.backgroundImageView.image = image
+                    self.backgroundImageView?.alpha = 0.2
                 }
             }
         }
