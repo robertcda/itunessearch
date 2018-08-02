@@ -43,32 +43,31 @@ class DetailViewController: UIViewController {
     //**********************
     var imageViewState:DetailViewImageState = .fetching{
         didSet{
+            let imageViews = [imageView,backgroundImageView]
             DispatchQueue.main.async {
                 switch self.imageViewState {
                 case .fetching:
-                    self.imageView?.image = #imageLiteral(resourceName: "placeholder")
-                    self.imageView?.alpha = 0.3
+                    imageViews.forEach({ $0?.image = #imageLiteral(resourceName: "placeholder") })
                     
-                    self.backgroundImageView?.image = #imageLiteral(resourceName: "placeholder")
+                    self.imageView?.alpha = 0.3
                     self.backgroundImageView?.alpha = 0.05
                     
                     self.masterViewDelegate?.updateMainViewBasedOnDetail(image: nil)
-
                     self.imageViewActivityIndicator?.startAnimating()
                 case .error:
+                    
                     self.imageView?.image = #imageLiteral(resourceName: "no-image")
                     self.backgroundImageView?.image = nil
+                    
                     self.imageViewActivityIndicator?.stopAnimating()
                     self.masterViewDelegate?.updateMainViewBasedOnDetail(image: nil)
                 case .fetched(let image):
-                    self.imageViewActivityIndicator?.stopAnimating()
+                    imageViews.forEach({ $0?.image = image })
 
-                    self.imageView?.image = image
                     self.imageView?.alpha = 1
-                    
-                    self.backgroundImageView.image = image
                     self.backgroundImageView?.alpha = 0.05
                     
+                    self.imageViewActivityIndicator?.stopAnimating()
                     self.masterViewDelegate?.updateMainViewBasedOnDetail(image: image)
                 }
             }

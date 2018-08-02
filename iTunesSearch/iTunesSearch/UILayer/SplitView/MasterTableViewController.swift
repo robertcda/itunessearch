@@ -147,6 +147,7 @@ extension MasterTableViewController: UITableViewDelegate{
             guard let cell = cell as? MasterTableViewCell else{
                 return
             }
+            // Here we validate the token to ensure that an image is updated to only the cell it is related to. All this due to reusability of Cells.
             guard token == cell.cellIdentificationToken else{
                 return
             }
