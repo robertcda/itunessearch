@@ -23,6 +23,7 @@ class MasterTableViewController: UIViewController {
     //**********************
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var noSearchResultsLabel: UILabel!
+    @IBOutlet weak var backgroundImageView: UIImageView!
     
     //**********************
     //MARK:- View Model
@@ -83,7 +84,9 @@ class MasterTableViewController: UIViewController {
     }
     
     private func configureTableView(){
-        self.tableView.backgroundColor = #colorLiteral(red: 0.9372549057, green: 0.9372549057, blue: 0.9568627477, alpha: 1)
+        self.view.backgroundColor = #colorLiteral(red: 0.9372549057, green: 0.9372549057, blue: 0.9568627477, alpha: 1)
+        self.tableView.backgroundColor = UIColor.clear
+        
         self.tableView.dataSource = self
         self.tableView.delegate = self
     }
@@ -100,6 +103,9 @@ class MasterTableViewController: UIViewController {
         }else{
             noSearchResultsLabel.isHidden = true
         }
+    }
+    func updateMainViewBasedOnDetail(image: UIImage){
+        
     }
 }
 extension MasterTableViewController:UITableViewDataSource{
@@ -137,6 +143,7 @@ extension MasterTableViewController: UITableViewDelegate{
         }
         // Just inform the delegate that selection has changed. What it does is not my busisness.
         self.masterSelectionDelegate?.trackSelected(source: self.masterViewModel.models[indexPath.row])
+        
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
@@ -171,4 +178,10 @@ extension MasterTableViewController:UISearchResultsUpdating{
     }
 }
 
+extension MasterTableViewController: UpdateMasterUIProtocol{
+    func updateMainViewBasedOnDetail(image: UIImage?) {
+        self.backgroundImageView.image = image
+        self.backgroundImageView.alpha = 0.05
+    }
+}
 

@@ -7,7 +7,9 @@
 //
 
 import UIKit
-
+protocol UpdateMasterUIProtocol: class{
+    func updateMainViewBasedOnDetail(image:UIImage?)
+}
 class DetailViewController: UIViewController {
 
     enum DetailViewImageState{
@@ -33,6 +35,9 @@ class DetailViewController: UIViewController {
     //**********************
     var viewModel: TrackViewModel? = nil
     var identificationToken: String = ""
+    
+    weak var masterViewDelegate:UpdateMasterUIProtocol? = nil
+    
     //**********************
     //MARK:- ImageView states.
     //**********************
@@ -45,13 +50,16 @@ class DetailViewController: UIViewController {
                     self.imageView?.alpha = 0.3
                     
                     self.backgroundImageView?.image = #imageLiteral(resourceName: "placeholder")
-                    self.backgroundImageView?.alpha = 0.3
+                    self.backgroundImageView?.alpha = 0.05
+                    
+                    self.masterViewDelegate?.updateMainViewBasedOnDetail(image: nil)
 
                     self.imageViewActivityIndicator?.startAnimating()
                 case .error:
                     self.imageView?.image = #imageLiteral(resourceName: "no-image")
                     self.backgroundImageView?.image = nil
                     self.imageViewActivityIndicator?.stopAnimating()
+                    self.masterViewDelegate?.updateMainViewBasedOnDetail(image: nil)
                 case .fetched(let image):
                     self.imageViewActivityIndicator?.stopAnimating()
 
@@ -59,7 +67,9 @@ class DetailViewController: UIViewController {
                     self.imageView?.alpha = 1
                     
                     self.backgroundImageView.image = image
-                    self.backgroundImageView?.alpha = 0.2
+                    self.backgroundImageView?.alpha = 0.05
+                    
+                    self.masterViewDelegate?.updateMainViewBasedOnDetail(image: image)
                 }
             }
         }

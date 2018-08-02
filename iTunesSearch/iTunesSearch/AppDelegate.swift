@@ -55,6 +55,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         }
         // Here we get the master and detail and set the delegate of the master, be careful that the detail should not have a strong relationship back to the master.
         masterViewController.masterSelectionDelegate = detailViewController
+        detailViewController.masterViewDelegate = masterViewController
         _ = detailViewController.view
         _ = masterViewController.view
     }
