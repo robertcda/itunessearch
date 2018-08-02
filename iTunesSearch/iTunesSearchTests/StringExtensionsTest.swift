@@ -28,5 +28,9 @@ class StringExtensionsTest: XCTestCase {
         XCTAssertEqual("A B C".replaceSpaceWithAPlus, "A+B+C")
         XCTAssertEqual("A".replaceSpaceWithAPlus, "A")
     }
-    
+    func testNonEmptyString(){
+        XCTAssertNil("".nonEmptyString)
+        XCTAssertNotNil("A".nonEmptyString)
+        XCTAssertNotNil("A12".nonEmptyString)
+    }
 }

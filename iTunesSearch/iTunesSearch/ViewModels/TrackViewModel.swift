@@ -10,16 +10,32 @@ import Foundation
 import UIKit
 
 struct TrackViewModel{
+    /**********
+     The model object that is interfaced by the TrackViewModel.
+     **********/
     var track: Track
+    
+    //**********************
+    //MARK:- some helper instances
+    //**********************
     private let modelInterpretor = NetworkToModelInterpretor()
     
-    typealias ImageFetchToken = String
-    typealias ImageHandler = (ImageFetchToken,UIImage?)->Void
+    //**********************
+    //MARK:- Initializer
+    //**********************
     
     init(track: Track) {
         self.track = track
     }
     
+
+    //**********************
+    //MARK:- Image Fetch Interfaces
+    //**********************
+
+    typealias ImageFetchToken = String
+    typealias ImageHandler = (ImageFetchToken,UIImage?)->Void
+
     /**********
      Fetches the thumbnail
      **********/
@@ -39,7 +55,7 @@ struct TrackViewModel{
     //**********************
     //MARK:- Fetch image logic
     //**********************
-    func fetchImage(imagePath:String,token: ImageFetchToken, handler:@escaping ImageHandler){
+    private func fetchImage(imagePath:String,token: ImageFetchToken, handler:@escaping ImageHandler){
         print("TrackViewModel:fetchImage: REQUEST: \(token)")
         modelInterpretor.getImage(urlPath: imagePath) { (image, error) in
             print("TrackViewModel:fetchImage: RESPONSE: \(token)")

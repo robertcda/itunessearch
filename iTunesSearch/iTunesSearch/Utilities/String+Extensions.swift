@@ -13,7 +13,7 @@ extension String{
     }
     
     var nonEmptyString: String? {
-        if self.count > 1{
+        if self.count >= 1{
             return self
         }else {
             return nil

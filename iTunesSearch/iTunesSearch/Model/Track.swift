@@ -8,14 +8,6 @@
 
 import Foundation
 
-//protocol TrackValues{
-//}
-//extension Int:TrackValues{}
-//extension String:TrackValues{}
-//extension Bool:TrackValues{}
-//extension Float:TrackValues{}
-//extension Date:TrackValues{}
-
 struct Track {
     typealias TrackDictionary = [String:Any]
     
@@ -39,28 +31,26 @@ struct Track {
     let artworkUrl100: String?
 
     init(dictionary:TrackDictionary) {
-        self.artistName = dictionary["artistName"] as? String
-        self.trackName = dictionary["trackName",default: ""] as? String
+        self.artistName =   dictionary["artistName"] as? String
+        self.trackName =    dictionary["trackName",default: ""] as? String
         
-        self.trackId = dictionary["trackId",default: ""] as? Int
-        self.artistId = dictionary["artistId",default: ""] as? Int
+        self.trackId =      dictionary["trackId",default: ""] as? Int
+        self.artistId =     dictionary["artistId",default: ""] as? Int
         self.collectionId = dictionary["collectionId",default: ""] as? Int
 
-        self.albumName = dictionary["collectionName",default: ""] as? String
+        self.albumName =    dictionary["collectionName",default: ""] as? String
 
-        self.price = dictionary["trackPrice",default: ""] as? Double
-        self.currency = dictionary["currency",default: ""] as? String
+        self.price =        dictionary["trackPrice",default: ""] as? Double
+        self.currency =     dictionary["currency",default: ""] as? String
 
         if let dateString = dictionary["releaseDate",default: ""] as? String{
-            self.releaseDate = dateString.dateFromTrackFormat()
+            self.releaseDate =  dateString.dateFromTrackFormat()
         }else{
             self.releaseDate = nil
         }
-
-        
-        self.artworkUrl30 = dictionary["artworkUrl30",default: ""] as? String
-        self.artworkUrl60 = dictionary["artworkUrl60",default: ""] as? String
-        self.artworkUrl100 = dictionary["artworkUrl100",default: ""] as? String
+        self.artworkUrl30 =     dictionary["artworkUrl30",default: ""] as? String
+        self.artworkUrl60 =     dictionary["artworkUrl60",default: ""] as? String
+        self.artworkUrl100 =    dictionary["artworkUrl100",default: ""] as? String
     }
 }
 
