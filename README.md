@@ -61,8 +61,8 @@ In the NetworkAPIManager class, when we are making an asynchronous call, I used 
 - The UI Design though very basic doesn't look good in iPad portrait mode. 
 - Would have created an extension on Error to show error messages especially when there is no network and stuff.
 
-## Disclaimer
-I have a nissan release tomorrow(2-Aug) in my project so will not be able to spend much time tomorrow, so hopefully this is sufficient for now.
+## Screenshots
+
 
 
 
