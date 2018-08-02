@@ -44,7 +44,7 @@ class DetailViewController: UIViewController {
                     self.imageViewActivityIndicator?.startAnimating()
                     self.imageView?.alpha = 0.3
                 case .error:
-                    self.imageView?.image = #imageLiteral(resourceName: "placeholder")
+                    self.imageView?.image = #imageLiteral(resourceName: "no-image")
                     self.imageViewActivityIndicator?.stopAnimating()
                 case .fetched(let image):
                     self.imageView?.image = image

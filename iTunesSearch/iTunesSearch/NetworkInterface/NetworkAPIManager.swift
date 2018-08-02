@@ -30,8 +30,8 @@ enum Endpoint{
 class NetworkAPIManager {
     var defaultSession:URLSession = {
         let defaultConfig = URLSessionConfiguration.default
-        defaultConfig.timeoutIntervalForRequest = 10
-        defaultConfig.timeoutIntervalForResource = 10
+        defaultConfig.timeoutIntervalForRequest = 20
+        defaultConfig.timeoutIntervalForResource = 20
         return URLSession(configuration: defaultConfig)
     }()
     //MARK:- Errors
