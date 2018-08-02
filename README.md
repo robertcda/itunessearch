@@ -70,6 +70,15 @@ In the NetworkAPIManager class, when we are making an asynchronous call, I used 
 ![alt text](https://bitbucket.org/robertdalmeida/itunessearch/src/master/Screenshots/iphoneOnSearch.png)
 ![alt text](https://bitbucket.org/robertdalmeida/itunessearch/src/master/Screenshots/iPhoneDetail.png)
 
+## Screenshots - iPad
+![alt text](Screenshots/iPadHome.png)
+![alt text](Screenshots/iPadOnSearch.png)
+
+## Screenshots - iPhone
+![alt text](Screenshots/iPhoneLanding.png)
+![alt text](Screenshots/iphoneOnSearch.png)
+![alt text](Screenshots/iPhoneDetail.png)
+
 
 
 
