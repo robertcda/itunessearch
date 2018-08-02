@@ -62,6 +62,7 @@ In the NetworkAPIManager class, when we are making an asynchronous call, I used 
 - Would have created an extension on Error to show error messages especially when there is no network and stuff.
 
 ## Screenshots
+![alt text](https://bitbucket.org/robertdalmeida/itunessearch/src/master/Screenshots/iPadHome.png)
 
 
 
