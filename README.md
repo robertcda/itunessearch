@@ -62,12 +62,22 @@ In the NetworkAPIManager class, when we are making an asynchronous call, I used 
 - Would have created an extension on Error to show error messages especially when there is no network and stuff.
 
 ## Screenshots - iPad
+
+### iPad Landing Page
 ![alt text](Screenshots/iPadHome.png)
+
+### iPad On Search & Track Selection
 ![alt text](Screenshots/iPadOnSearch.png)
 
 ## Screenshots - iPhone
+
+### iPhone Landing Page
 ![alt text](Screenshots/iPhoneLanding.png)
+
+### iPhone On Search
 ![alt text](Screenshots/iphoneOnSearch.png)
+
+### iPhone On Track Selection
 ![alt text](Screenshots/iPhoneDetail.png)
 
 
