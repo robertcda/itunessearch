@@ -21,8 +21,10 @@ To interface with the server even though we could achieve it with a same class, 
 APIManagerinterface is a set of interfaces(protocol) which the interpretor uses to get low level data, either Data/Dictionary.
 The Interpretor's function would be to convert that to model objects that the application would understand.
 
-### Image Fetching - Thumbnails.
-To ensure that we update the correct cell due to the multiple asynchronous requests.
+### Image Fetching - Thumbnails and Tokens
+To ensure that we update the correct cell due to the multiple asynchronous requests we may run into situations where we do not know who requested and update the wrong ui object.
+To overcome this, I'm using a token based pattern to fetch images in general. So keeping track of the token is an overhead  and deviation from the design that view should never know the corresponding object, but in this case we need to compromise. But its safe and makes the code more robust.
+So cell keeps the token to identify the TrackViewModel, so on reciving an image back from network layer we compare the token and update only if there is a match.
 
 ### No Singleton
 It would have been quicker to simply use singletons to communicate to different parts. But in the bigger picture singletons just create problems. So avoided it consciously. 
@@ -51,7 +53,7 @@ In the NetworkAPIManager class, when we are making an asynchronous call, I used 
 
 ## Improvements
 - Wanted to show off test driven development capability, but decided against it as i didnt want to suffer in completing functionality.
-- A lot more test cases could have been written to ensure different parts wouldn't break in the course of time. I did a sample of each type of test case, but in a well thought of project I would need to check both positive and negative scenarios.
+- A lot more test cases could have been written to ensure different parts wouldn't break in the course of time. I did a sample of each type of test case, but in a well thought of project I would need to check both positive and negative scenarios a whole lot of functions need test.
 - Wanted to resolve the constraint errors when no track is selected.
 - Couldn’t do much code commenting for maintainability, but added stuff here and there during my work where i felt like.
 - Didn’t even attempt to do backward compatibility.
