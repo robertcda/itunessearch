@@ -38,7 +38,16 @@ class NetworkAPIManager {
         case jsonSerializationFailed, unableToReadContentsOfURL
     }
     
-    //MARK:- Network Calls
+    //MARK:- system cache configuration.
+    class func configureCache(){
+        /*
+         Configuring a cache of 500MB.
+         */
+        let cacheSizeMemory = 500*1024*1024
+        let cacheSizeDisk = 500*1024*1024
+        let sharedCache = URLCache(memoryCapacity: cacheSizeMemory, diskCapacity: cacheSizeDisk, diskPath: "nsurlcache")
+        URLCache.shared = sharedCache
+    }
     
     
     

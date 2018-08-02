@@ -8,7 +8,6 @@
 
 import Foundation
 extension String{
-    //TODO: Test This
     var replaceSpaceWithAPlus: String{
         return self.replacingOccurrences(of: " ", with: "+")
     }

@@ -3,36 +3,58 @@
 A simple application to search through some media content in iTunes.
 Works on iPhone and iPad.
 
+
+## Design
+
+### MVVM
+As much as was possible in the given time frame ensured that the view/controllers ask anything or everything about what it is supposed to display to the view model.
+Used a single struct TrackViewModel to behave as a view model for both the cells in the master view and the detailview.
+
+### Caching
+Was thinkin of implementing a custom cache, but then decided to leverage URLSession's shared cache and bump up its capacity instead. More often than not, its better to leave some things to the OS itself.
+
+### Network communication
+To interface with the server even though we could achieve it with a same class, brought in 2 layers.
+1. APIManagerInterface
+2. NetworkToModelInterpretor.
+
+APIManagerinterface is a set of interfaces(protocol) which the interpretor uses to get low level data, either Data/Dictionary.
+The Interpretor's function would be to convert that to model objects that the application would understand.
+
+### No Singleton
+It would have been quicker to simply use singletons to communicate to different parts. But in the bigger picture singletons just create problems. So avoided it consciously. 
+
+### Latest Search Results.
+To ensure that only the latest search results was shown.
+Followed a simple logic to ensure that the latest search results will be shown by maintaining an instance variable of the latest searched text. i think a more stable logic would be to stop the previous tasks and execute the latest one, instead of currently just disregarding the response.
+
 ## Proud of
 
-- Network Layer, Model Interpretation, View Model
--- Separated the Network APi and model interpretation, which allowed me to simulate API mocking.
--- Basically Network Layer doesnt know business and ModelInterpretator bridges that to the application.
+### Mocking the API
+One benifit of using multi layers for network communication is flexibility. Using the idea of dependency Injection by way of constructors/initilizers. The Interpretor would require any type which would comply with the APIManagerInterface protocol. Hence it was easy to mock that protocol for testing. 
 
-- Used MockAPI to test.
--- Since i was not allowed to use any 3rd party app, i thought that the best way to mock APis would be to introduce dependency injection at the construction of the ModelInterpretor, which allowed me to mock the APIs.
+### iPhone and iPad support
+Used trait based attribute value setting of the stack view to ensure that there is a little difference in the UI design for compact vs regular screen sizes.
 
-- Using Screen real estate better on iPhone and iPad using traits.
--- A basic thing but made the UI to be a bit different in iPhone and iPad.
+### ImageView needed state support
+With the number of Image Views in the application, it was important to maintain the state of the image view, and what better way to maintain state than enums. Thank you swift.org for greatly increasing the power of enums, but with great power comes great responsibility. Didn't want to overdo it. 
 
-- ImageState to maintain the state of the ImageView in the masterCell and detailCell.
--- To maintain if the image is availabe for a cell, I introduced states, which help in better code readability.
--- yes, I enjoy writing enums in swift :)
+### Write think re-write think all over again... 
+Quite a bit of the code was rewritten and given the chance would rewrite it again, it is a creative process(lesser order) to think of a variety of ways to write some logic. 
 
-- Tried to write and rewrite quite a bit of the code to ensure that less code does more.
+
 
 ## Improvements
-
-- Many more test cases for the view models could have been written. But given the time my focus was on getting the functionlity up and running.
-- I did a sample of each type of test case, but In reality need to check both positive and negative scenarios.
-- If I had the luxury of time, i would first start writing the test cases and write the protocol and then implement the protocol in the model.
-- followed a simple logic to ensure that the latest search results will be shown by maintaining an instance variable of the latest searched text. Given more time, i think i would stop the previous tasks and execute the latest one, instead of currently just disregarding the response.
+- Wanted to show off test driven development capability, but decided against it as i didnt want to suffer in completing functionality.
+- A lot more test cases could have been written to ensure different parts wouldn't break in the course of time. I did a sample of each type of test case, but in a well thought of project I would need to check both positive and negative scenarios.
 - Wanted to resolve the constraint errors when no track is selected.
 - Couldn’t do much code commenting for maintainability, but added stuff here and there during my work where i felt like.
-- Didn’t even attemp to do backward compatibility.
+- Didn’t even attempt to do backward compatibility.
+- Sometimes a thumbnail does not load, it could be due to either the request is timing out or the current logic is unable to update the cell.
+- The UI Design though very basic doesn't look good in iPad portrait mode. 
 
 ## Disclaimer
-I have a release tomorrow(2-Aug) in my project so will not be able to spend much time tomorrow, so hopefully this is sufficient for now.
+I have a nissan release tomorrow(2-Aug) in my project so will not be able to spend much time tomorrow, so hopefully this is sufficient for now.
 
 
 

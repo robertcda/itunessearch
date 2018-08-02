@@ -47,7 +47,7 @@ class MasterViewModel{
             // On getting the results, check if the result we got is for the latest request that we sent
             guard self.searchTextRequest == searchText else{
                 // If it was for an earlier request, we are not interested in the response.
-                print("MasterViewModel:searchFor: Old request thus discarding...: searchText:\(searchText)")
+                print("MasterViewModel:searchFor: Old request: searchText:\(searchText)")
                 return
             }
             
