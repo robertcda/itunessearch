@@ -31,7 +31,7 @@ class DetailViewController: UIViewController {
     //MARK:- View Model
     //**********************
     var viewModel: TrackViewModel? = nil
-    
+    var identificationToken: String = ""
     //**********************
     //MARK:- ImageView states.
     //**********************
@@ -119,8 +119,24 @@ class DetailViewController: UIViewController {
         self.priceLabel.text = viewModel.priceToDisplay
         self.releaseDateLabel.text = viewModel.releaseDateToDisplay
         
+        self.updateImageFromViewModel()
+    }
+    
+    private func updateImageFromViewModel(){
+        guard let viewModel = self.viewModel else {
+            return
+        }
+
         self.imageViewState = .fetching
-        viewModel.fetchArtwork { [weak self] (image) in
+        
+        self.identificationToken = viewModel.detailViewIdentificationToken
+        viewModel.fetchArtwork(token: self.identificationToken) { [weak self] (token, image) in
+            guard let myToken = self?.identificationToken else{
+                return
+            }
+            guard myToken == token else{
+                return
+            }
             if let image = image{
                 self?.imageViewState = .fetched(image)
             }else{

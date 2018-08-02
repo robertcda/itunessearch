@@ -21,6 +21,9 @@ To interface with the server even though we could achieve it with a same class, 
 APIManagerinterface is a set of interfaces(protocol) which the interpretor uses to get low level data, either Data/Dictionary.
 The Interpretor's function would be to convert that to model objects that the application would understand.
 
+### Image Fetching - Thumbnails.
+To ensure that we update the correct cell due to the multiple asynchronous requests.
+
 ### No Singleton
 It would have been quicker to simply use singletons to communicate to different parts. But in the bigger picture singletons just create problems. So avoided it consciously. 
 
@@ -42,6 +45,8 @@ With the number of Image Views in the application, it was important to maintain 
 ### Write think re-write think all over again... 
 Quite a bit of the code was rewritten and given the chance would rewrite it again, it is a creative process(lesser order) to think of a variety of ways to write some logic. 
 
+### defer to call completion block
+In the NetworkAPIManager class, when we are making an asynchronous call, I used defer to call the completion block. This ensures that no matter what the completion gets called and it gets called only once. Many a times had issues with either the completion being called multiple times or not called at all. This prevents all that.
 
 
 ## Improvements
@@ -52,6 +57,7 @@ Quite a bit of the code was rewritten and given the chance would rewrite it agai
 - Didn’t even attempt to do backward compatibility.
 - Sometimes a thumbnail does not load, it could be due to either the request is timing out or the current logic is unable to update the cell.
 - The UI Design though very basic doesn't look good in iPad portrait mode. 
+- Would have created an extension on Error to show error messages especially when there is no network and stuff.
 
 ## Disclaimer
 I have a nissan release tomorrow(2-Aug) in my project so will not be able to spend much time tomorrow, so hopefully this is sufficient for now.

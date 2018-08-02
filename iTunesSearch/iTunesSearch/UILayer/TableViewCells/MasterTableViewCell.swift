@@ -14,6 +14,7 @@ protocol MasterTableViewCellDataSource{
     var secondRowValueLabel: String { get }
     var secondRowTitleLabel: String { get }
     var imageViewState: MasterTableViewCell.ImageState { get }
+    var cellIdentificationToken:String { get }
 }
 
 class MasterTableViewCell: UITableViewCell {
@@ -35,7 +36,7 @@ class MasterTableViewCell: UITableViewCell {
     //**********************
     //MARK:- Image Loding logic
     //**********************
-
+    var cellIdentificationToken: String = ""
     var imageViewState:ImageState = .fetching{
         didSet{
             DispatchQueue.main.async {
@@ -88,6 +89,7 @@ class MasterTableViewCell: UITableViewCell {
         self.secondRowTitleLabel.text = source.secondRowTitleLabel
         self.secondRowValueLabel.text = source.secondRowValueLabel
         self.imageViewState = source.imageViewState
+        self.cellIdentificationToken = source.cellIdentificationToken
     }
     
     //**********************
@@ -99,6 +101,7 @@ class MasterTableViewCell: UITableViewCell {
         self.firstRowValueLabel.text = ""
         self.secondRowTitleLabel.text = ""
         self.secondRowValueLabel.text = ""
+        self.cellIdentificationToken = ""
         super.prepareForReuse()
     }
 }

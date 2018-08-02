@@ -20,6 +20,8 @@ struct Track {
     typealias TrackDictionary = [String:Any]
     
     let trackId: Int?
+    let artistId: Int?
+    let collectionId: Int?
     
     let artistName: String?
     
@@ -39,8 +41,11 @@ struct Track {
     init(dictionary:TrackDictionary) {
         self.artistName = dictionary["artistName"] as? String
         self.trackName = dictionary["trackName",default: ""] as? String
-        self.trackId = dictionary["trackId",default: ""] as? Int
         
+        self.trackId = dictionary["trackId",default: ""] as? Int
+        self.artistId = dictionary["artistId",default: ""] as? Int
+        self.collectionId = dictionary["collectionId",default: ""] as? Int
+
         self.albumName = dictionary["collectionName",default: ""] as? String
 
         self.price = dictionary["trackPrice",default: ""] as? Double

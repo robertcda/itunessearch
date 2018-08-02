@@ -132,11 +132,9 @@ extension MasterTableViewController: UITableViewDelegate{
     //**********************
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
         if let detailViewController = masterSelectionDelegate as? DetailViewController, let detailNavController = detailViewController.navigationController {
             splitViewController?.showDetailViewController(detailNavController, sender: nil)
         }
-        
         // Just inform the delegate that selection has changed. What it does is not my busisness.
         self.masterSelectionDelegate?.trackSelected(source: self.masterViewModel.models[indexPath.row])
     }
@@ -144,8 +142,12 @@ extension MasterTableViewController: UITableViewDelegate{
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         // Delay the fecth of the images only until the cell is going to be displayed.
         let model = self.masterViewModel.models[indexPath.row]
-        model.showThumbnailImage { [weak cell] (image) in
+        let cellsTokenFromViewModel = model.cellIdentificationToken
+        model.fetchThumbnailImage(token: cellsTokenFromViewModel) { [weak cell] (token, image) in
             guard let cell = cell as? MasterTableViewCell else{
+                return
+            }
+            guard token == cell.cellIdentificationToken else{
                 return
             }
             if let image = image{

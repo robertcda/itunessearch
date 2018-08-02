@@ -13,7 +13,8 @@ struct TrackViewModel{
     var track: Track
     private let modelInterpretor = NetworkToModelInterpretor()
     
-    typealias ImageHandler = (UIImage?)->Void
+    typealias ImageFetchToken = String
+    typealias ImageHandler = (ImageFetchToken,UIImage?)->Void
     
     init(track: Track) {
         self.track = track
@@ -22,50 +23,41 @@ struct TrackViewModel{
     /**********
      Fetches the thumbnail
      **********/
-    func showThumbnailImage(thumbnailImageHandler:@escaping ImageHandler){
-        
+    func fetchThumbnailImage(token:ImageFetchToken, thumbnailImageHandler:@escaping ImageHandler){
         //TODO: here we are taking always the 30 as the thumbnail, but what if for some reason the get fails or the resources is not existing, then i would like to retry with the 60 url and then 90 url, as a fallback.
-        
         if let thumbnailPath = self.track.artworkUrl30{
-            modelInterpretor.getImage(urlPath: thumbnailPath) { (image, error) in
-                var imageToReturn: UIImage? = nil
-                defer{
-                    thumbnailImageHandler(imageToReturn)
-                }
-                guard error == nil else{
-                    print("TrackViewModel: Unable to fetch image: \(String(describing: error))")
-                    return
-                }
-                guard let image = image else{
-                    print("TrackViewModel: No Image returned.")
-                    return
-                }
-                imageToReturn = image
-            }
+            self.fetchImage(imagePath: thumbnailPath,token:token, handler: thumbnailImageHandler)
         }
     }
     
-    func fetchArtwork(thumbnailImageHandler:@escaping ImageHandler){
-        if let thumbnailPath = self.track.artworkUrl100{
-            modelInterpretor.getImage(urlPath: thumbnailPath) { (image, error) in
-                var imageToReturn: UIImage? = nil
-                defer{
-                    thumbnailImageHandler(imageToReturn)
-                }
-
-                guard error == nil else{
-                    print("TrackViewModel:fetchArtwork: Unable to fetch image: \(String(describing: error))")
-                    return
-                }
-                guard let image = image else{
-                    print("TrackViewModel:fetchArtwork: No Image returned.")
-                    return
-                }
-                imageToReturn = image
-            }
+    func fetchArtwork(token: ImageFetchToken, thumbnailImageHandler:@escaping ImageHandler){
+        if let artworkImagePath = self.track.artworkUrl100{
+            self.fetchImage(imagePath: artworkImagePath,token:token, handler: thumbnailImageHandler)
         }
     }
     
+    //**********************
+    //MARK:- Fetch image logic
+    //**********************
+    func fetchImage(imagePath:String,token: ImageFetchToken, handler:@escaping ImageHandler){
+        print("TrackViewModel:fetchImage: REQUEST: \(token)")
+        modelInterpretor.getImage(urlPath: imagePath) { (image, error) in
+            print("TrackViewModel:fetchImage: RESPONSE: \(token)")
+            var imageToReturn: UIImage? = nil
+            defer{
+                handler(token, imageToReturn)
+            }
+            guard error == nil else{
+                print("TrackViewModel:fetchImage: Unable to fetch image: \(String(describing: error))")
+                return
+            }
+            guard let image = image else{
+                print("TrackViewModel:fetchImage: No Image returned.")
+                return
+            }
+            imageToReturn = image
+        }
+    }
     
 }
 
@@ -92,6 +84,17 @@ extension TrackViewModel:MasterTableViewCellDataSource{
     
     var secondRowTitleLabel: String {
         return "Artist:"
+    }
+    
+    var cellIdentificationToken: String{
+        let firstComponent = self.track.trackId?.nonEmptyStringVal ?? self.track.artistId?.nonEmptyStringVal ?? self.track.collectionId?.nonEmptyStringVal ?? "0"
+        let secondComponent = self.track.trackName?.nonEmptyString ?? self.track.albumName?.nonEmptyString ?? self.track.artistName?.nonEmptyString ?? "X"
+        return firstComponent + ":" + secondComponent + ":"
+    }
+}
+extension Int{
+    var nonEmptyStringVal: String? {
+        return String(self)
     }
 }
 
@@ -137,5 +140,9 @@ extension TrackViewModel{
         }
         displayTitle = name + "(" + artist + ")"
         return displayTitle
+    }
+    
+    var detailViewIdentificationToken: String{
+        return self.cellIdentificationToken
     }
 }

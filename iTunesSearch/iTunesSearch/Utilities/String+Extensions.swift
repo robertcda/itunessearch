@@ -11,4 +11,12 @@ extension String{
     var replaceSpaceWithAPlus: String{
         return self.replacingOccurrences(of: " ", with: "+")
     }
+    
+    var nonEmptyString: String? {
+        if self.count > 1{
+            return self
+        }else {
+            return nil
+        }
+    }
 }

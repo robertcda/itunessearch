@@ -28,14 +28,15 @@ enum Endpoint{
  All network calls routed through this guy.
  **********/
 class NetworkAPIManager {
-    
-    let defaultSession = URLSession(configuration: .default)
-    
-    
-    
+    var defaultSession:URLSession = {
+        let defaultConfig = URLSessionConfiguration.default
+        defaultConfig.timeoutIntervalForRequest = 10
+        defaultConfig.timeoutIntervalForResource = 10
+        return URLSession(configuration: defaultConfig)
+    }()
     //MARK:- Errors
     enum ErrorsNetworkAPIManager: Error{
-        case jsonSerializationFailed, unableToReadContentsOfURL
+        case jsonSerializationFailed, unableToReadContentsOfURL, unableToCreatURL
     }
     
     //MARK:- system cache configuration.
@@ -48,9 +49,6 @@ class NetworkAPIManager {
         let sharedCache = URLCache(memoryCapacity: cacheSizeMemory, diskCapacity: cacheSizeDisk, diskPath: "nsurlcache")
         URLCache.shared = sharedCache
     }
-    
-    
-    
 }
 
 extension NetworkAPIManager: APIManagerInterface{
@@ -60,10 +58,7 @@ extension NetworkAPIManager: APIManagerInterface{
     
     func dataFrom(endPoint:Endpoint, completion:@escaping APIManagerInterface.DataFromCompletionHandler){
         DispatchQueue.global().async {
-            
-            
             if let url = endPoint.url{
-                print("url:\(url)")
                 let dataTask = self.defaultSession.dataTask(with: url) { (data, urlresponse, error) in
                     
                     /**********
@@ -75,9 +70,6 @@ extension NetworkAPIManager: APIManagerInterface{
                     defer{
                         completion(errorToReturn,dataObject)
                     }
-                    
-
-                    
                     // First establish the return value
                     errorToReturn = error
                     dataObject = data
@@ -89,6 +81,8 @@ extension NetworkAPIManager: APIManagerInterface{
                     
                 }
                 dataTask.resume()
+            }else{
+                completion(ErrorsNetworkAPIManager.unableToCreatURL,nil)
             }
         }
     }
@@ -100,12 +94,8 @@ extension NetworkAPIManager: APIManagerInterface{
     
     func downloadJsonFrom(endPoint:Endpoint, completion:@escaping APIManagerInterface.DownloadJsonCompletionHandler) {
         DispatchQueue.global().async {
-            
-
-            
             if let url = endPoint.url{
                 let downloadTask = self.defaultSession.downloadTask(with: url) { (url, urlResponse, error) in
-                    
                     /**********
                      Note this pattern: sometimes due to many conditional checks we may miss to call completion which may lead to someone waiting infitintly, but by using Defer, we ensure that no matter what the completion is called at a relatively smaller cost.
                      **********/
@@ -139,11 +129,11 @@ extension NetworkAPIManager: APIManagerInterface{
                             print("NetworkAPIManager:getData: unableToReadContentsOfURL")
                             errorToReturn = ErrorsNetworkAPIManager.unableToReadContentsOfURL
                         }
-                        
                     }
-                    
                 }
                 downloadTask.resume()
+            }else{
+                completion(ErrorsNetworkAPIManager.unableToCreatURL,nil)
             }
         }
     }
