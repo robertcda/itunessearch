@@ -59,11 +59,6 @@ class MasterTableViewController: UIViewController {
         }
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
     /**********
      This method sets up the search controller for the tableView.
      **********/
@@ -96,9 +91,6 @@ class MasterTableViewController: UIViewController {
         }else{
             noSearchResultsLabel.isHidden = true
         }
-    }
-    func updateMainViewBasedOnDetail(image: UIImage){
-        
     }
 }
 extension MasterTableViewController:UITableViewDataSource{
